@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatDisplay : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+    public Character[] characterScripts;
     [Header("Characer Stats")]
     public int characterNum;
     public int characterMovesetActive;
@@ -23,6 +24,16 @@ public class StatDisplay : MonoBehaviour
     private string[] char1Moveset = new string[] {"Pure Radiance", "Death of a Sun", "Fleeting Light"};
     private string[] char2Moveset = new string[] {"Veil of Darkness", "Moonlight's Comfort", "Mercy of an Eclipse"};
 
+    [Header("Button Manager")]
+    //public GameObject fightButton;
+    public GameObject fightOptions;
+
+    void Start()
+    {
+        fightOptions = GameObject.Find("fightOptions");
+        fightOptions.SetActive(false);
+    }
+
     void Update()
     {
         DisplayStats();
@@ -30,23 +41,19 @@ public class StatDisplay : MonoBehaviour
 
     public void DisplayStats()
     {
-        switch (characterNum)
+        if (characterNum <= 2)
         {
-            case 1:
-                attackStat = 10;
-                graceStat = 4;
-                healthStat = 15;
-                break;
-            case 2:
-                attackStat = 4;
-                graceStat = 10;
-                healthStat = 15;
-                break;
-        }
+            Character activeCharacter;
+            activeCharacter = characterScripts[characterNum - 1];
 
-        attackStatText.text = attackStat.ToString();
-        graceStatText.text = graceStat.ToString();
-        healthStatText.text = healthStat.ToString();
+            attackStat = activeCharacter.attackStat;
+            graceStat = activeCharacter.graceStat;
+            healthStat = activeCharacter.healthStat;
+
+            attackStatText.text = attackStat.ToString();
+            graceStatText.text = graceStat.ToString();
+            healthStatText.text = healthStat.ToString();
+        }
     }
 
     public void DisplayMoves()
@@ -73,5 +80,17 @@ public class StatDisplay : MonoBehaviour
             i++;
         }
         
+    }
+
+    public void ShowFightOptions()
+    {
+        if (fightOptions.activeSelf)
+        {
+            fightOptions.SetActive(false);
+        }
+        else
+        {
+            fightOptions.SetActive(true);
+        }
     }
 }

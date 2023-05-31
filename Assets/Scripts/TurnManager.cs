@@ -7,24 +7,32 @@ public class TurnManager : MonoBehaviour
 {
     public int turnNumber;
     public int roundsHad;
-    public StatDisplay statInformation;
+    public UIManager statInformation;
 
     public GameObject[] enemies;
     public GameObject[] characters;
     public Button[] allActionButtons;
+    public Enemy[] enemyScripts;
 
     public int activePlayers;
 
     void Start()
     {
-        statInformation = GameObject.Find("statsBox").GetComponent<StatDisplay>();
+        statInformation = GameObject.Find("UIManager").GetComponent<UIManager>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         characters = GameObject.FindGameObjectsWithTag("Playable");
         GameObject[] buttonObjects = GameObject.FindGameObjectsWithTag("ActionButton");
+        enemyScripts = new Enemy[enemies.Length];
         int i = 0;
         foreach (GameObject buttonObject in buttonObjects)
         {
             allActionButtons[i] = buttonObjects[i].GetComponent<Button>();
+            i++;
+        }
+        i = 0;
+        foreach (GameObject enemy in enemies)
+        {
+            enemyScripts[i] = enemies[i].GetComponent<Enemy>();
             i++;
         }
         activePlayers = enemies.Length + characters.Length;
