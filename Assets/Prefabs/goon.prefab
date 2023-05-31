@@ -112,6 +112,7 @@ MonoBehaviour:
   currentEnemyHealth: 0
   healthBar: {fileID: 2842633292901518331}
   enemyPrefab: {fileID: 0}
+  selectionArrow: {fileID: 8173945936450802304}
 --- !u!1 &2842633292717931848
 GameObject:
   m_ObjectHideFlags: 0

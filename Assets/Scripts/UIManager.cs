@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public Character[] characterScripts;
+    public Character activeCharacter;
+
     [Header("Characer Stats")]
     public int characterNum;
     public int characterMovesetActive;
@@ -20,9 +22,6 @@ public class UIManager : MonoBehaviour
     [Header("Character Moveset")]
     public string[] activeMoveset = new string[3];
     public Text[] fightButtonText; 
-
-    private string[] char1Moveset = new string[] {"Pure Radiance", "Death of a Sun", "Fleeting Light"};
-    private string[] char2Moveset = new string[] {"Veil of Darkness", "Moonlight's Comfort", "Mercy of an Eclipse"};
 
     [Header("Button Manager")]
     //public GameObject fightButton;
@@ -43,7 +42,6 @@ public class UIManager : MonoBehaviour
     {
         if (characterNum <= 2)
         {
-            Character activeCharacter;
             activeCharacter = characterScripts[characterNum - 1];
 
             attackStat = activeCharacter.attackStat;
@@ -61,21 +59,22 @@ public class UIManager : MonoBehaviour
         switch (characterMovesetActive)
         {
             case 1:
-                AssignMovesetActive(char1Moveset);
+                AssignMovesetActive();
                 break;
             case 2:
-                AssignMovesetActive(char2Moveset);
+                AssignMovesetActive();
                 break;
 
         }
     }
 
-    public void AssignMovesetActive(string[] activatedMoveset)
+    public void AssignMovesetActive()
     {
+        
         int i = 0;
-        foreach (string moveName in activatedMoveset)
+        foreach (string moveName in activeCharacter.charMoveset)
         {
-            activeMoveset[i] = activatedMoveset[i];
+            activeMoveset[i] = activeCharacter.charMoveset[i];
             fightButtonText[i].text = activeMoveset[i];
             i++;
         }

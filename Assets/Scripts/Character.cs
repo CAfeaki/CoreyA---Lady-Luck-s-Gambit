@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public int characterNum;
     public int attackStat;
     public int graceStat;
     public int healthStat;
-    private string[] charMoveset;
+    public string[] charMoveset;
 }

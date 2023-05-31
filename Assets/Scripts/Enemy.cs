@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
 
     public void Update()
     {
+        DisplayEnemyStats();
         if (turnManager.turnNumber == enemyNumber + 2)
         {
             EnemyMove();
@@ -48,7 +49,7 @@ public class Enemy : MonoBehaviour
     {
         attackStat = Random.Range(5, 10);
         graceStat = Random.Range(2, 6);
-        healthStat = Random.Range(10, 20);
+        healthStat = Random.Range(20, 40);
         currentEnemyHealth = healthStat;
     }
 
