@@ -12,6 +12,12 @@ public class Character : MonoBehaviour
     public int currHealth;
     public string[] charMoveset;
     public Slider healthBar;
+    private TurnManager turnManager;
+
+    void Start()
+    {
+        turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+    }
 
     void Update()
     {
@@ -34,17 +40,30 @@ public class Character : MonoBehaviour
     {
         if (characterNum == 1)
         {
-            TurnManager turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
-            CombatManager combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
-
-            //turnManager.chargeAttackActive = true;
-            //turnManager.TurnEnd();
+            turnManager.roundToReturn = turnManager.roundsHad + 1;
+            turnManager.targetToReturn = enemyScript;
+            turnManager.chargeAttackActive = true;
         }
         if (characterNum == 2)
         {
             Character char1Stats = GameObject.Find("Char1").GetComponent<Character>();
-            char1Stats.currHealth += graceStat;
+            if (char1Stats.currHealth < char1Stats.healthStat)
+            {
+                char1Stats.currHealth += graceStat;
+                if (char1Stats.currHealth > char1Stats.healthStat)
+                {
+                    char1Stats.currHealth = char1Stats.healthStat;
+                }
+            }
         }
+    }
+
+    public void Char1Move2(Enemy enemyScript)
+    {
+        Debug.Log("made it");
+        enemyScript.currentEnemyHealth -= attackStat * 2 + graceStat;
+        turnManager.chargeAttackActive = false;
+        turnManager.TurnEnd();
     }
 
     public void Move3(Enemy enemyScript)

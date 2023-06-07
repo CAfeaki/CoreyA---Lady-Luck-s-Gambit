@@ -16,6 +16,8 @@ public class TurnManager : MonoBehaviour
     public Button[] allActionButtons;
 
     public bool chargeAttackActive = false;
+    public int roundToReturn;
+    public Enemy targetToReturn;
 
     public int activePlayers;
 
@@ -29,7 +31,6 @@ public class TurnManager : MonoBehaviour
         }
         characters = GameObject.FindGameObjectsWithTag("Playable");
         GameObject[] buttonObjects = GameObject.FindGameObjectsWithTag("ActionButton");
-        //enemyScripts = new Enemy[enemies.Count];
         int i = 0;
         foreach (GameObject buttonObject in buttonObjects)
         {
@@ -52,11 +53,28 @@ public class TurnManager : MonoBehaviour
         {
             ChargeAttack();
         }
+
+        if (enemies.Count == 0)
+        {
+            Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+            announcementText.enabled = true;
+        }
     }
 
     public void SetCharTurn()
     {
-
+        if (chargeAttackActive)
+        {
+            Debug.Log(roundsHad == roundToReturn);
+            Debug.Log(turnNumber);
+            if (roundsHad == roundToReturn)
+            {
+                Debug.Log("2 worked");
+                Character characterScript = characters[0].GetComponent<Character>();
+                chargeAttackActive = false;
+                characterScript.Char1Move2(targetToReturn);
+            }
+        }
         if (turnNumber > activePlayers)
         {
             roundsHad++;
@@ -75,7 +93,6 @@ public class TurnManager : MonoBehaviour
         }
         statInformation.characterNum = turnNumber;
         statInformation.characterMovesetActive = turnNumber;
-
     }
 
     public void TurnEnd()
