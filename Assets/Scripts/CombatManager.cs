@@ -15,17 +15,18 @@ public class CombatManager : MonoBehaviour
     private GameObject selectedTarget;
     public bool targetSelect = false;
     public int targetNumber = 0;
+    public int moveButtonNum;
 
     void Start()
     {
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().characterScripts[turnManager.turnNumber-1];
     }
 
     void Update()
     {
-        // if bool acivated, call select function
+        activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().characterScripts[turnManager.turnNumber - 1];
+
         if (targetSelect)
         {
             FightTargetSelect(targetNumber);
@@ -40,7 +41,6 @@ public class CombatManager : MonoBehaviour
                 FightTargetSelect(targetNumber);
             }
         }
-        
     }
 
     public void ActivateTargetSelect()
@@ -58,8 +58,6 @@ public class CombatManager : MonoBehaviour
         }
         selectionArrow = enemies[currSelectionNum].GetComponent<Enemy>().selectionArrow; //change the arrow
         selectionArrow.SetActive(true);
-        //Debug.Log(currSelectionNum); //debug
-        //Debug.Log(enemies.Length); //debug
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -74,14 +72,22 @@ public class CombatManager : MonoBehaviour
     {
         selectedTarget = enemies[selectedTargetNum];
         Enemy targetScript = selectedTarget.GetComponent<Enemy>();
-        targetScript.currentEnemyHealth -= activeCharacter.attackStat;
+        /*if ()
+        {
+            activeCharacter.Move1(targetScript);
+        }*/
+        //targetScript.currentEnemyHealth -= activeCharacter.attackStat;
         targetNumber = 0;
         turnManager.TurnEnd();
     }
 
     public void HealAction()
     {
-        activeCharacter.healthStat += activeCharacter.graceStat;
+        if (activeCharacter.currHealth < activeCharacter.healthStat)
+        {
+            activeCharacter.currHealth += activeCharacter.graceStat;
+        }
+        turnManager.TurnEnd();
     }
 
     public void PullAction()

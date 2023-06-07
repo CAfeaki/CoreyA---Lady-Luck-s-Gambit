@@ -553,6 +553,7 @@ MonoBehaviour:
   attackStat: 4
   graceStat: 10
   healthStat: 15
+  currHealth: 15
   charMoveset:
   - Veil of Darkness
   - Moonlight's Comfort
@@ -1777,6 +1778,7 @@ MonoBehaviour:
   attackStat: 10
   graceStat: 4
   healthStat: 15
+  currHealth: 5
   charMoveset:
   - Pure Radiance
   - Death of a Sun
@@ -1819,6 +1821,7 @@ MonoBehaviour:
   attackStat: 0
   graceStat: 0
   healthStat: 0
+  currHealth: 0
   attackStatText: {fileID: 909852505}
   graceStatText: {fileID: 1563255427}
   healthStatText: {fileID: 937478007}
@@ -2682,9 +2685,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1926512527}
-        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
-        m_MethodName: TurnEnd
+      - m_Target: {fileID: 2041123198}
+        m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
+        m_MethodName: HealAction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4401,6 +4404,7 @@ MonoBehaviour:
   turnManager: {fileID: 0}
   activeCharacter: {fileID: 0}
   targetSelect: 0
+  targetNumber: 0
 --- !u!1001 &2842633292238370468
 PrefabInstance:
   m_ObjectHideFlags: 0

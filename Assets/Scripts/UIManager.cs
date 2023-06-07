@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public int attackStat;
     public int graceStat;
     public int healthStat;
+    public int currHealth;
 
     public Text attackStatText;
     public Text graceStatText;
@@ -47,10 +48,11 @@ public class UIManager : MonoBehaviour
             attackStat = activeCharacter.attackStat;
             graceStat = activeCharacter.graceStat;
             healthStat = activeCharacter.healthStat;
+            currHealth = activeCharacter.currHealth;
 
             attackStatText.text = attackStat.ToString();
             graceStatText.text = graceStat.ToString();
-            healthStatText.text = healthStat.ToString();
+            healthStatText.text = currHealth.ToString() + "/" + healthStat.ToString();
         }
     }
 
