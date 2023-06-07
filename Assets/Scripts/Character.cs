@@ -22,7 +22,48 @@ public class Character : MonoBehaviour
     {
         if (characterNum == 1)
         {
+            enemyScript.currentEnemyHealth -= attackStat;
+        }
+        if (characterNum == 2)
+        {
+            enemyScript.currentEnemyHealth -= attackStat;
+        }
+    }
 
+    public void Move2(Enemy enemyScript)
+    {
+        if (characterNum == 1)
+        {
+            TurnManager turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+            CombatManager combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
+
+            //turnManager.chargeAttackActive = true;
+            //turnManager.TurnEnd();
+        }
+        if (characterNum == 2)
+        {
+            Character char1Stats = GameObject.Find("Char1").GetComponent<Character>();
+            char1Stats.currHealth += graceStat;
+        }
+    }
+
+    public void Move3(Enemy enemyScript)
+    {
+        if (characterNum == 1)
+        {
+            enemyScript.currentEnemyHealth -= attackStat / 2 * graceStat / 2;
+        }
+        if (characterNum == 2)
+        {
+            enemyScript.currentEnemyHealth -= attackStat;
+            if (currHealth < healthStat)
+            {
+                currHealth += attackStat;
+                if (currHealth > healthStat)
+                {
+                    currHealth = healthStat;
+                }
+            }
         }
     }
 

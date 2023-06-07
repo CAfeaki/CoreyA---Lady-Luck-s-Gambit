@@ -10,11 +10,17 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Text descText;
     public int cardNumber;
     public int moveIndex;
+    public Character activeCharacter;
 
     void Start()
     {
         cardNumber = this.GetComponent<SelectedInfo>().cardType;
         moveIndex = this.GetComponent<SelectedInfo>().moveType;
+    }
+
+    void Update()
+    {
+        activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().activeCharacter;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -40,13 +46,34 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             switch (moveIndex)
             {
                 case 1:
-                    descText.text = "move 1";
+                    if (activeCharacter.characterNum == 1)
+                    {
+                        descText.text = "Deals attack stat";
+                    }
+                    if (activeCharacter.characterNum == 2)
+                    {
+                        descText.text = "Deals attack stat";
+                    }
                     break;
                 case 2:
-                    descText.text = "move 2";
+                    if (activeCharacter.characterNum == 1)
+                    {
+                        descText.text = "Deals attack stat x 2. Takes a turn to charge";
+                    }
+                    if (activeCharacter.characterNum == 2)
+                    {
+                        descText.text = "Restores HP equal to grace stat to an ally.";
+                    }
                     break;
                 case 3:
-                    descText.text = "move 3";
+                    if (activeCharacter.characterNum == 1)
+                    {
+                        descText.text = "Deals attack stat / 2 x Grace stat / 2";
+                    }
+                    if (activeCharacter.characterNum == 2)
+                    {
+                        descText.text = "Deals attack stat and heals equal to the damage dealt";
+                    }
                     break;
 
             }

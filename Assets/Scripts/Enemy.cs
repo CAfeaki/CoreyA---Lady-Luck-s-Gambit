@@ -31,18 +31,27 @@ public class Enemy : MonoBehaviour
 
     public void Update()
     {
+        enemyNumber = turnManager.enemies.IndexOf(gameObject) + 1;
         DisplayEnemyStats();
         if (turnManager.turnNumber == enemyNumber + 2)
         {
             EnemyMove();
+        }
+
+        if (currentEnemyHealth <= 0)
+        {
+            Destroy(gameObject);
+            turnManager.enemies.Remove(gameObject);
+            turnManager.enemyScripts.Remove(this);
+            CombatManager combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
+            combatManager.enemies.Remove(gameObject);
         }
     }
 
     public void EnemyMove()
     {
         Debug.Log("Enemy move taken.");
-        turnManager.turnNumber++;
-        turnManager.SetCharTurn();
+        turnManager.TurnEnd();
     }
 
     public void EnemyStats()

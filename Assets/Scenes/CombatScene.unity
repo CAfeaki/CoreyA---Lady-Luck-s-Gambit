@@ -209,14 +209,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1926512527}
-        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
-        m_MethodName: TurnEnd
-        m_Mode: 1
+      - m_Target: {fileID: 2041123198}
+        m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
+        m_MethodName: ActivateTargetSelect
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -289,6 +289,7 @@ MonoBehaviour:
   descText: {fileID: 1668010790}
   cardNumber: 0
   moveIndex: 0
+  activeCharacter: {fileID: 0}
 --- !u!1 &8590840
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63f00b9e91c07b4cb63dd840827716d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterNum: 0
+  characterNum: 2
   attackStat: 4
   graceStat: 10
   healthStat: 15
@@ -558,6 +559,7 @@ MonoBehaviour:
   - Veil of Darkness
   - Moonlight's Comfort
   - Mercy of an Eclipse
+  healthBar: {fileID: 1304292456}
 --- !u!1 &277652076
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +971,7 @@ MonoBehaviour:
   descText: {fileID: 1668010790}
   cardNumber: 0
   moveIndex: 0
+  activeCharacter: {fileID: 0}
 --- !u!114 &533266723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,11 +1157,11 @@ MonoBehaviour:
       - m_Target: {fileID: 2041123198}
         m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
         m_MethodName: ActivateTargetSelect
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1231,6 +1234,7 @@ MonoBehaviour:
   descText: {fileID: 1668010790}
   cardNumber: 0
   moveIndex: 0
+  activeCharacter: {fileID: 0}
 --- !u!1 &570760230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,14 +1595,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1926512527}
-        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
-        m_MethodName: TurnEnd
-        m_Mode: 1
+      - m_Target: {fileID: 2041123198}
+        m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
+        m_MethodName: ActivateTargetSelect
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1671,6 +1675,7 @@ MonoBehaviour:
   descText: {fileID: 1668010790}
   cardNumber: 0
   moveIndex: 0
+  activeCharacter: {fileID: 0}
 --- !u!1 &708002360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,15 +1779,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63f00b9e91c07b4cb63dd840827716d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterNum: 0
+  characterNum: 1
   attackStat: 10
   graceStat: 4
   healthStat: 15
-  currHealth: 5
+  currHealth: 15
   charMoveset:
   - Pure Radiance
   - Death of a Sun
   - Fleeting Light
+  healthBar: {fileID: 497270442}
 --- !u!1 &731975323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,6 +2954,7 @@ MonoBehaviour:
   descText: {fileID: 1668010790}
   cardNumber: 0
   moveIndex: 0
+  activeCharacter: {fileID: 0}
 --- !u!114 &1142433687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3140,6 +3147,7 @@ MonoBehaviour:
   descText: {fileID: 1668010790}
   cardNumber: 3
   moveIndex: 0
+  activeCharacter: {fileID: 0}
 --- !u!114 &1198946838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,6 +4191,7 @@ MonoBehaviour:
   turnNumber: 1
   roundsHad: 0
   statInformation: {fileID: 731975324}
+  combatManager: {fileID: 0}
   enemies: []
   characters: []
   allActionButtons:
@@ -4190,6 +4199,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   enemyScripts: []
+  chargeAttackActive: 0
   activePlayers: 0
 --- !u!1 &1954768931
 GameObject:
@@ -4405,6 +4415,7 @@ MonoBehaviour:
   activeCharacter: {fileID: 0}
   targetSelect: 0
   targetNumber: 0
+  moveButtonNum: 0
 --- !u!1001 &2842633292238370468
 PrefabInstance:
   m_ObjectHideFlags: 0

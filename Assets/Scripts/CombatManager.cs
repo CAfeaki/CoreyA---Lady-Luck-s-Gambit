@@ -5,7 +5,7 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 {
     [Header("General")]
-    private GameObject[] enemies;
+    public List<GameObject> enemies = new List<GameObject>();
     public int selectedTargetNum;
     public TurnManager turnManager;
     public Character activeCharacter;
@@ -16,21 +16,28 @@ public class CombatManager : MonoBehaviour
     public bool targetSelect = false;
     public int targetNumber = 0;
     public int moveButtonNum;
+    //public bool chargeAttackActive = false;
 
     void Start()
     {
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemies.Add(enemyObject);
+        }
     }
 
     void Update()
     {
-        activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().characterScripts[turnManager.turnNumber - 1];
+        if (turnManager.turnNumber <= 2)
+        {
+            activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().characterScripts[turnManager.turnNumber - 1];
+        }
 
         if (targetSelect)
         {
             FightTargetSelect(targetNumber);
-            if (targetNumber < enemies.Length - 1 && Input.GetKeyDown(KeyCode.RightArrow))
+            if (targetNumber < enemies.Count - 1 && Input.GetKeyDown(KeyCode.RightArrow))
             { 
                 targetNumber++;
                 FightTargetSelect(targetNumber);
@@ -43,9 +50,18 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void ActivateTargetSelect()
+    public void ActivateTargetSelect(int moveNum)
     {
-        targetSelect = true;
+
+        moveButtonNum = moveNum;
+        if (moveNum == 2 && activeCharacter.characterNum == 2)
+        {
+            FightAction();
+        }
+        else
+        {
+            targetSelect = true;
+        }
     }
 
     public void FightTargetSelect(int currSelectionNum)
@@ -72,11 +88,18 @@ public class CombatManager : MonoBehaviour
     {
         selectedTarget = enemies[selectedTargetNum];
         Enemy targetScript = selectedTarget.GetComponent<Enemy>();
-        /*if ()
+        if (moveButtonNum == 1) // do the action associated with the button pressed
         {
             activeCharacter.Move1(targetScript);
-        }*/
-        //targetScript.currentEnemyHealth -= activeCharacter.attackStat;
+        }
+        else if (moveButtonNum == 2)
+        {
+            activeCharacter.Move2(targetScript);
+        }
+        else if (moveButtonNum == 3)
+        {
+            activeCharacter.Move3(targetScript);
+        }
         targetNumber = 0;
         turnManager.TurnEnd();
     }
@@ -86,6 +109,10 @@ public class CombatManager : MonoBehaviour
         if (activeCharacter.currHealth < activeCharacter.healthStat)
         {
             activeCharacter.currHealth += activeCharacter.graceStat;
+            if (activeCharacter.currHealth > activeCharacter.healthStat)
+            {
+                activeCharacter.currHealth = activeCharacter.healthStat;
+            }
         }
         turnManager.TurnEnd();
     }

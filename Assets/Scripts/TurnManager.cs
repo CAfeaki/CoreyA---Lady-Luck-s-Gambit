@@ -8,21 +8,28 @@ public class TurnManager : MonoBehaviour
     public int turnNumber;
     public int roundsHad;
     public UIManager statInformation;
+    public CombatManager combatManager;
 
-    public GameObject[] enemies;
+    public List<GameObject> enemies = new List<GameObject>();
+    public List<Enemy> enemyScripts = new List<Enemy>();
     public GameObject[] characters;
     public Button[] allActionButtons;
-    public Enemy[] enemyScripts;
+
+    public bool chargeAttackActive = false;
 
     public int activePlayers;
 
     void Start()
     {
         statInformation = GameObject.Find("UIManager").GetComponent<UIManager>();
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
+        foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemies.Add(enemyObject);
+        }
         characters = GameObject.FindGameObjectsWithTag("Playable");
         GameObject[] buttonObjects = GameObject.FindGameObjectsWithTag("ActionButton");
-        enemyScripts = new Enemy[enemies.Length];
+        //enemyScripts = new Enemy[enemies.Count];
         int i = 0;
         foreach (GameObject buttonObject in buttonObjects)
         {
@@ -32,24 +39,34 @@ public class TurnManager : MonoBehaviour
         i = 0;
         foreach (GameObject enemy in enemies)
         {
-            enemyScripts[i] = enemies[i].GetComponent<Enemy>();
-            i++;
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            enemyScripts.Add(enemyScript);
         }
-        activePlayers = enemies.Length + characters.Length;
         SetCharTurn();
+    }
+
+    void Update()
+    {
+        activePlayers = enemies.Count + characters.Length;
+        if (chargeAttackActive)
+        {
+            ChargeAttack();
+        }
     }
 
     public void SetCharTurn()
     {
+
         if (turnNumber > activePlayers)
         {
+            roundsHad++;
             turnNumber = 1;
             foreach (Button actionButton in allActionButtons)
             {
                 actionButton.interactable = true;
             }
         }
-        else if (turnNumber >= 3)        // disable player buttons once its the enemy's turn
+        else if (turnNumber == 3)        // disable player buttons once its the enemy's turn
         {
             foreach (Button actionButton in allActionButtons)
             {
@@ -76,5 +93,14 @@ public class TurnManager : MonoBehaviour
         }
         turnNumber++;
         SetCharTurn();
+    }
+
+    public void ChargeAttack()
+    {
+        if (turnNumber == 1)
+        {
+            combatManager.moveButtonNum = 2;
+            combatManager.FightAction();
+        }
     }
 }
