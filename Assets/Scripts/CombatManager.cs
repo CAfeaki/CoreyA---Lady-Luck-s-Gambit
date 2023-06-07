@@ -13,6 +13,8 @@ public class CombatManager : MonoBehaviour
     [Header("Fight")]
     private GameObject fightOptions;
     private GameObject selectedTarget;
+    public bool targetSelect = false;
+    public int targetNumber = 0;
 
     void Start()
     {
@@ -23,33 +25,45 @@ public class CombatManager : MonoBehaviour
 
     void Update()
     {
+        // if bool acivated, call select function
+        if (targetSelect)
+        {
+            FightTargetSelect(targetNumber);
+            if (targetNumber < enemies.Length - 1 && Input.GetKeyDown(KeyCode.RightArrow))
+            { 
+                targetNumber++;
+                FightTargetSelect(targetNumber);
+            }
+            if (targetNumber != 0 && Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                targetNumber--;
+                FightTargetSelect(targetNumber);
+            }
+        }
         
     }
 
-    public void FightTargetSelect()
+    public void ActivateTargetSelect()
     {
-        GameObject selectionArrow = enemies[0].GetComponent<Enemy>().selectionArrow;
-        selectionArrow.SetActive(true);
-        int currSelectionNum = 0;
+        targetSelect = true;
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space)) // set to space, should be changed later 
+    public void FightTargetSelect(int currSelectionNum)
+    {
+        GameObject selectionArrow;
+        foreach (GameObject activeEnemy in enemies)
         {
-            selectionArrow.SetActive(false);
-            if (currSelectionNum == enemies.Length)
-            {
-                currSelectionNum = 0;
-            }
-            else if (currSelectionNum < enemies.Length)
-            {
-                currSelectionNum++;
-            }
-            selectionArrow = enemies[currSelectionNum].GetComponent<Enemy>().selectionArrow;
-            selectionArrow.SetActive(true);
-            Debug.Log(currSelectionNum);
-            Debug.Log(enemies.Length);
+            GameObject activeArrow = activeEnemy.GetComponent<Enemy>().selectionArrow;
+            activeArrow.SetActive(false);
         }
+        selectionArrow = enemies[currSelectionNum].GetComponent<Enemy>().selectionArrow; //change the arrow
+        selectionArrow.SetActive(true);
+        //Debug.Log(currSelectionNum); //debug
+        //Debug.Log(enemies.Length); //debug
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            targetSelect = false;
             selectionArrow.SetActive(false);
             selectedTargetNum = currSelectionNum;
             FightAction();
@@ -61,6 +75,7 @@ public class CombatManager : MonoBehaviour
         selectedTarget = enemies[selectedTargetNum];
         Enemy targetScript = selectedTarget.GetComponent<Enemy>();
         targetScript.currentEnemyHealth -= activeCharacter.attackStat;
+        targetNumber = 0;
         turnManager.TurnEnd();
     }
 

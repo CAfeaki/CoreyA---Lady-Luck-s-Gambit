@@ -1152,7 +1152,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2041123198}
         m_TargetAssemblyTypeName: CombatManager, Assembly-CSharp
-        m_MethodName: FightTargetSelect
+        m_MethodName: ActivateTargetSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4400,6 +4400,7 @@ MonoBehaviour:
   selectedTargetNum: 0
   turnManager: {fileID: 0}
   activeCharacter: {fileID: 0}
+  targetSelect: 0
 --- !u!1001 &2842633292238370468
 PrefabInstance:
   m_ObjectHideFlags: 0
