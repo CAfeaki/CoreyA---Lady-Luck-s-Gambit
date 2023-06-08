@@ -27,11 +27,13 @@ public class UIManager : MonoBehaviour
 
     [Header("Button Manager")]
     public GameObject fightOptions;
+    public List<Button> cardButtons = new List<Button>();
 
     void Start()
     {
         fightOptions = GameObject.Find("fightOptions");
         fightOptions.SetActive(false);
+
     }
 
     void Update()

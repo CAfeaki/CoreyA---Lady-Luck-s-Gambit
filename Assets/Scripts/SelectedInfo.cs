@@ -23,4 +23,9 @@ public class SelectedInfo : MonoBehaviour
         cardNum = chosenCardNum;
         thisCard.interactable = true;
     }
+
+    public void DeActivateCard()
+    {
+        thisCard.interactable = false;
+    }
 }

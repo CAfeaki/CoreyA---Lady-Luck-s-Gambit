@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DealerSystem : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class DealerSystem : MonoBehaviour
     public List<int> playerCards = new List<int>();
     public int chosenCard;
     public SelectedInfo cardAssign;
-    public int playerHandValue = 0;
+    public int playerHandValue;
+    public bool firstCardPlay;
+    private CombatManager combatManager;
 
     void Start()
     {
@@ -21,6 +24,8 @@ public class DealerSystem : MonoBehaviour
         {
             cardCounter.Add(4);
         }
+        playerHandValue = 0;
+        combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
     }
 
     void Update()
@@ -45,6 +50,22 @@ public class DealerSystem : MonoBehaviour
             cardCounter.RemoveAt(randomNum+1);
         }
         PlayerHand(playerCards.IndexOf(chosenCard));
+        if (playerHandValue == 21)
+        {
+            combatManager.jackpotButton.SetActive(true);
+        }
+        if (playerHandValue > 21)
+        {
+            Debug.Log("bust!");
+            playerCards.Clear();
+            playerHandValue = 0;
+            UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
+            foreach(Button cardButton in uiSystem.cardButtons)
+            {
+                cardButton.interactable = false;
+            }
+        }
+        ActivateCards(chosenCard);
     }
 
     public void PlayerHand(int cardIndex)
@@ -63,8 +84,34 @@ public class DealerSystem : MonoBehaviour
         playerHandValue = newHandValue;
     }
 
-    public void ActivateCards()
+    public void ActivateCards(int chosenCardNum)
     {
+        switch (chosenCardNum)
+        {
+            case 1:
+                Debug.Log(chosenCardNum);
+                break;
+            case 2:
+                Debug.Log(chosenCardNum);
+                break;
+            case 3:
+                Debug.Log(chosenCardNum);
+                break;
+            case 4:
+                Debug.Log(chosenCardNum);
+                break;
+        }
+    }
 
+    public void PlayCard(int cardNum)
+    {
+        if (firstCardPlay)
+        {
+            firstCardPlay = false;
+            playerHandValue -= playerCards[cardNum - 1];
+            playerCards.RemoveAt(cardNum - 1);
+            UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
+            uiSystem.cardButtons[cardNum - 1].interactable = false;
+        }
     }
 }

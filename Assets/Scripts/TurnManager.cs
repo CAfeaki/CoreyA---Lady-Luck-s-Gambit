@@ -9,6 +9,7 @@ public class TurnManager : MonoBehaviour
     public int roundsHad;
     public UIManager statInformation;
     public CombatManager combatManager;
+    public DealerSystem dealerSystem;
 
     public List<GameObject> enemies = new List<GameObject>();
     public List<Enemy> enemyScripts = new List<Enemy>();
@@ -25,6 +26,7 @@ public class TurnManager : MonoBehaviour
     {
         statInformation = GameObject.Find("UIManager").GetComponent<UIManager>();
         combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
+        dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemies.Add(enemyObject);
@@ -63,6 +65,7 @@ public class TurnManager : MonoBehaviour
 
     public void SetCharTurn()
     {
+        dealerSystem.firstCardPlay = true;
         if (chargeAttackActive)
         {
             Debug.Log(roundsHad == roundToReturn);

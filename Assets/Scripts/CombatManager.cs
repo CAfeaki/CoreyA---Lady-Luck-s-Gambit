@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class CombatManager : MonoBehaviour
     public int selectedTargetNum;
     public TurnManager turnManager;
     public Character activeCharacter;
+    public DealerSystem dealerScript;
 
     [Header("Fight")]
     private GameObject fightOptions;
@@ -16,10 +18,12 @@ public class CombatManager : MonoBehaviour
     public bool targetSelect = false;
     public int targetNumber = 0;
     public int moveButtonNum;
+    public GameObject jackpotButton;
     //public bool chargeAttackActive = false;
 
     void Start()
     {
+        dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
         {
@@ -119,11 +123,25 @@ public class CombatManager : MonoBehaviour
 
     public void PullAction()
     {
-        DealerSystem dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         if (dealerScript.playerCards.Count < 3)
         {
             dealerScript.CardPull();
+            turnManager.TurnEnd();
         }
+    }
+
+    public void TheJackpot()
+    {
+        foreach (GameObject enemyObject in enemies)
+        {
+            Enemy enemyScript = enemyObject.GetComponent<Enemy>();
+            Character char1Script = GameObject.Find("Char1").GetComponent<Character>();
+            Character char2Script = GameObject.Find("Char2").GetComponent<Character>();
+            enemyScript.currentEnemyHealth -= char1Script.attackStat + char2Script.graceStat;
+        }
+        jackpotButton.SetActive(false);
+        dealerScript.playerHandValue = 0;
+        dealerScript.playerCards.Clear();
     }
 
 
