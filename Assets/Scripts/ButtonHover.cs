@@ -86,7 +86,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 case 3:
                     if (activeCharacter.characterNum == 1)
                     {
-                        descText.text = "Deals attack stat / 2 x Grace stat / 2";
+                        descText.text = "Deals attack stat / 2 to all enemies";
                     }
                     if (activeCharacter.characterNum == 2)
                     {

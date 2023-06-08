@@ -13,6 +13,7 @@ public class Character : MonoBehaviour
     public string[] charMoveset;
     public Slider healthBar;
     private TurnManager turnManager;
+    public GameObject deadText;
 
     void Start()
     {
@@ -22,6 +23,22 @@ public class Character : MonoBehaviour
     void Update()
     {
         DisplayCharacterStats();
+
+        if (currHealth <= 0)
+        {
+            currHealth = 0;
+            deadText.SetActive(true);
+            turnManager.deadChar = characterNum;
+        }
+
+        if (deadText.activeSelf)
+        {
+            if (currHealth > 0)
+            {
+                deadText.SetActive(false);
+                turnManager.deadChar = 0;
+            }
+        }
     }
 
     public void Move1(Enemy enemyScript)
@@ -60,7 +77,6 @@ public class Character : MonoBehaviour
 
     public void Char1Move2(Enemy enemyScript)
     {
-        Debug.Log("made it");
         enemyScript.currentEnemyHealth -= attackStat * 2 + graceStat;
         turnManager.chargeAttackActive = false;
         turnManager.TurnEnd();
@@ -70,7 +86,10 @@ public class Character : MonoBehaviour
     {
         if (characterNum == 1)
         {
-            enemyScript.currentEnemyHealth -= attackStat / 2 * graceStat / 2;
+            foreach (Enemy targetScript in turnManager.enemyScripts)
+            {
+                targetScript.currentEnemyHealth -= attackStat / 2;
+            }
         }
         if (characterNum == 2)
         {

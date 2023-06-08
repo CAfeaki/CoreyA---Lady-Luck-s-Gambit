@@ -64,6 +64,10 @@ public class CombatManager : MonoBehaviour
         {
             FightAction();
         }
+        else if (moveNum == 3 && activeCharacter.characterNum == 1)
+        {
+            FightAction();
+        }
         else
         {
             targetSelect = true;
@@ -126,9 +130,8 @@ public class CombatManager : MonoBehaviour
     public void PullAction()
     {
         if (dealerScript.playerCards.Count < 3)
-        //if (dealerScript.playerCards[0] == 0 || dealerScript.playerCards[1] == 0 || dealerScript.playerCards[2] == 0)
         {
-            dealerScript.CardPull();
+            dealerScript.CardPull(true, null);
             turnManager.TurnEnd();
         }
     }

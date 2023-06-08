@@ -15,6 +15,7 @@ public class TurnManager : MonoBehaviour
     public List<Enemy> enemyScripts = new List<Enemy>();
     public GameObject[] characters;
     public Button[] allActionButtons;
+    public int deadChar;
 
     public bool chargeAttackActive = false;
     public int roundToReturn;
@@ -61,6 +62,19 @@ public class TurnManager : MonoBehaviour
             Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
             announcementText.enabled = true;
         }
+
+        if (deadChar != 0)
+        {
+            if (turnNumber == deadChar)
+            {
+                TurnEnd();
+            }
+        }
+
+        if (turnNumber > activePlayers)
+        {
+            SetCharTurn();
+        }
     }
 
     public void SetCharTurn()
@@ -68,11 +82,8 @@ public class TurnManager : MonoBehaviour
         dealerSystem.firstCardPlay = true;
         if (chargeAttackActive)
         {
-            Debug.Log(roundsHad == roundToReturn);
-            Debug.Log(turnNumber);
             if (roundsHad == roundToReturn)
             {
-                Debug.Log("2 worked");
                 Character characterScript = characters[0].GetComponent<Character>();
                 chargeAttackActive = false;
                 characterScript.Char1Move2(targetToReturn);
@@ -87,6 +98,7 @@ public class TurnManager : MonoBehaviour
                 actionButton.interactable = true;
             }
         }
+
         else if (turnNumber == 3)        // disable player buttons once its the enemy's turn
         {
             foreach (Button actionButton in allActionButtons)
@@ -96,6 +108,7 @@ public class TurnManager : MonoBehaviour
         }
         statInformation.characterNum = turnNumber;
         statInformation.characterMovesetActive = turnNumber;
+
     }
 
     public void TurnEnd()

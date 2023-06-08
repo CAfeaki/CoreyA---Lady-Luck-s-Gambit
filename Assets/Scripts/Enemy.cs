@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("General")]
+    private DealerSystem dealerSystem;
+
     [Header("Turn Management")]
     public int enemyNumber;
     public TurnManager turnManager;
@@ -16,15 +19,29 @@ public class Enemy : MonoBehaviour
     public int currentEnemyHealth;
     public Slider healthBar;
 
+    [Header("Enemy Attacking")]
+    private List<Character> characterScripts = new List<Character>();
+    private Character char1;
+    private Character char2;
+    private Character enemyTarget;
+
+    [Header("Enemy Pulling")]
+    public List<int> enemyCards = new List<int>();
+
     [Header("Spawning")]
     public GameObject enemyPrefab;
     public GameObject selectionArrow;
-    //public Array[] enemyTransformsIndex = new Array[] { 1, 2, 3 };
-    //public Vector3[] enemyTransformsPositions;
 
     void Start()
     {
-        //Instantiate(enemyPrefab,)
+        char1 = GameObject.Find("Char1").GetComponent<Character>();
+        char2 = GameObject.Find("Char2").GetComponent<Character>();
+
+        characterScripts.Add(char1);
+        characterScripts.Add(char2);
+
+        dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+
         EnemyStats();
         DisplayEnemyStats();
     }
@@ -50,13 +67,24 @@ public class Enemy : MonoBehaviour
 
     public void EnemyMove()
     {
-        Debug.Log("Enemy move taken.");
+        int targetNum = Random.Range(0, 2);
+        enemyTarget = characterScripts[targetNum];
+        enemyTarget.currHealth -= attackStat;
+
+        int pullChance = Random.Range(0, 11);
+        pullChance = 10;  // take out, this is just for testing!
+        if (pullChance == 10)
+        {
+            dealerSystem.CardPull(false, this);
+        }
+
+        //Debug.Log("Enemy move taken.");
         turnManager.TurnEnd();
     }
 
     public void EnemyStats()
     {
-        attackStat = Random.Range(5, 10);
+        attackStat = Random.Range(3, 7);
         graceStat = Random.Range(2, 6);
         healthStat = Random.Range(20, 40);
         currentEnemyHealth = healthStat;

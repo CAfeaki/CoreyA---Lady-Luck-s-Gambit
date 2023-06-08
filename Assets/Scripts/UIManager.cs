@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     [Header("Button Manager")]
     public GameObject fightOptions;
     public List<Button> cardButtons = new List<Button>();
+    public List<Button> enemyCardButtons = new List<Button>();
 
     void Start()
     {

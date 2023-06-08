@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DealerSystem : MonoBehaviour
 {
-    [SerializeField] private List<int> cardsInPlay = new List<int>();
+    private List<int> cardsInPlay = new List<int>();
     private List<int> cardCounter = new List<int>();
     public List<int> playerCards = new List<int>();
     public int chosenCard;
@@ -15,7 +15,7 @@ public class DealerSystem : MonoBehaviour
     public int playerHandValue;
     public bool firstCardPlay;
     private CombatManager combatManager;
-    private bool reshuffleActive = false;
+    private UIManager uiManager;
 
     void Start()
     {
@@ -27,15 +27,9 @@ public class DealerSystem : MonoBehaviour
         {
             cardCounter.Add(4);
         }
-        /*if (!reshuffleActive)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                playerCards.Add(0);
-            }
-        }*/
         playerHandValue = 0;
         combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     void Update()
@@ -44,12 +38,11 @@ public class DealerSystem : MonoBehaviour
         {
             cardsInPlay.Clear();
             cardCounter.Clear();
-            reshuffleActive = true;
             Start();
         }
     }
 
-    public void CardPull()
+    public void CardPull(bool isPlayer, Enemy enemyScript)
     {
         int randomNum = Random.Range(0, cardsInPlay.Count-1);
         chosenCard = cardsInPlay[randomNum+1];
@@ -59,27 +52,33 @@ public class DealerSystem : MonoBehaviour
             cardsInPlay.RemoveAt(randomNum+1);
             cardCounter.RemoveAt(randomNum+1);
         }
-        // archived dupe system
-
-        playerCards.Add(chosenCard);
-        PlayerHand();
-        cardIndex = 0;
-        if (playerHandValue == 21)
+        if (isPlayer)
         {
-            combatManager.jackpotButton.SetActive(true);
-        }
-        if (playerHandValue > 21)
-        {
-            Debug.Log("bust!");
-            playerCards.Clear();
-            playerHandValue = 0;
-            UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
-            foreach(Button cardButton in uiSystem.cardButtons)
+            playerCards.Add(chosenCard);
+            PlayerHand();
+            cardIndex = 0;
+            if (playerHandValue == 21)
             {
-                cardButton.interactable = false;
+                combatManager.jackpotButton.SetActive(true);
             }
+            if (playerHandValue > 21)
+            {
+                Debug.Log("bust!");
+                playerCards.Clear();
+                playerHandValue = 0;
+                UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
+                foreach (Button cardButton in uiSystem.cardButtons)
+                {
+                    cardButton.interactable = false;
+                }
+            }
+            ActivateCards(chosenCard);
         }
-        ActivateCards(chosenCard);
+        else
+        {
+            enemyScript.enemyCards.Add(chosenCard);
+
+        }
     }
 
     public void PlayerHand()
@@ -116,7 +115,7 @@ public class DealerSystem : MonoBehaviour
 
     public void ActivateCards(int chosenCardNum)
     {
-        switch (chosenCardNum)
+        switch (chosenCardNum) // imagine having to make content lmaooo
         {
             case 1:
                 Debug.Log(chosenCardNum);
@@ -145,26 +144,4 @@ public class DealerSystem : MonoBehaviour
         }
     }
 
-    // achived dupe system
-
-    /*for (int i = 0;i < playerCards.Count;i++) // making sure card values dont overwrite each other in the list
-{
-    if (playerCards[i] > 0)
-    {
-        cardIndex++;
-    }
-
-    if (playerCards[i] == chosenCard) // if theres an identical value, move the space
-    {
-        while (playerCards[cardIndex] > 0)
-        {
-            cardIndex++;
-            Debug.Log("cardIndex = " + cardIndex);
-            if (cardIndex == playerCards.Count - 1)
-            {
-                break;
-            }
-        }
-    }
-}*/
 }
