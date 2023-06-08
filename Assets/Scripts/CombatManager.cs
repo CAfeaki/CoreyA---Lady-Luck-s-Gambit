@@ -9,8 +9,9 @@ public class CombatManager : MonoBehaviour
     public List<GameObject> enemies = new List<GameObject>();
     public int selectedTargetNum;
     public TurnManager turnManager;
-    public Character activeCharacter;
-    public DealerSystem dealerScript;
+    private Character activeCharacter;
+    private DealerSystem dealerScript;
+    private UIManager uiManager;
 
     [Header("Fight")]
     private GameObject fightOptions;
@@ -25,6 +26,7 @@ public class CombatManager : MonoBehaviour
     {
         dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemies.Add(enemyObject);
@@ -124,6 +126,7 @@ public class CombatManager : MonoBehaviour
     public void PullAction()
     {
         if (dealerScript.playerCards.Count < 3)
+        //if (dealerScript.playerCards[0] == 0 || dealerScript.playerCards[1] == 0 || dealerScript.playerCards[2] == 0)
         {
             dealerScript.CardPull();
             turnManager.TurnEnd();
@@ -142,6 +145,10 @@ public class CombatManager : MonoBehaviour
         jackpotButton.SetActive(false);
         dealerScript.playerHandValue = 0;
         dealerScript.playerCards.Clear();
+        foreach (Button cardButton in uiManager.cardButtons)
+        {
+            cardButton.interactable = false;
+        }
     }
 
 

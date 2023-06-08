@@ -9,10 +9,13 @@ public class DealerSystem : MonoBehaviour
     private List<int> cardCounter = new List<int>();
     public List<int> playerCards = new List<int>();
     public int chosenCard;
-    public SelectedInfo cardAssign;
+    public GameObject cardAssign;
+    public SelectedInfo cardScript;
+    public int cardIndex;
     public int playerHandValue;
     public bool firstCardPlay;
     private CombatManager combatManager;
+    private bool reshuffleActive = false;
 
     void Start()
     {
@@ -24,6 +27,13 @@ public class DealerSystem : MonoBehaviour
         {
             cardCounter.Add(4);
         }
+        /*if (!reshuffleActive)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                playerCards.Add(0);
+            }
+        }*/
         playerHandValue = 0;
         combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
     }
@@ -34,6 +44,7 @@ public class DealerSystem : MonoBehaviour
         {
             cardsInPlay.Clear();
             cardCounter.Clear();
+            reshuffleActive = true;
             Start();
         }
     }
@@ -42,14 +53,17 @@ public class DealerSystem : MonoBehaviour
     {
         int randomNum = Random.Range(0, cardsInPlay.Count-1);
         chosenCard = cardsInPlay[randomNum+1];
-        playerCards.Add(chosenCard);
         cardCounter[randomNum+1] -= 1;
         if (cardCounter[randomNum+1] == 0)
         {
             cardsInPlay.RemoveAt(randomNum+1);
             cardCounter.RemoveAt(randomNum+1);
         }
-        PlayerHand(playerCards.IndexOf(chosenCard));
+        // archived dupe system
+
+        playerCards.Add(chosenCard);
+        PlayerHand();
+        cardIndex = 0;
         if (playerHandValue == 21)
         {
             combatManager.jackpotButton.SetActive(true);
@@ -68,15 +82,31 @@ public class DealerSystem : MonoBehaviour
         ActivateCards(chosenCard);
     }
 
-    public void PlayerHand(int cardIndex)
+    public void PlayerHand()
     {
         int newHandValue = 0;
+        int cardIndex = 1;
+        int i = 0;
 
-        cardIndex++;
-        cardAssign = GameObject.Find("card " + cardIndex).GetComponent<SelectedInfo>();
-        cardAssign.ActivateCard(chosenCard);
+        cardAssign = GameObject.Find("card " + cardIndex);
+        cardScript = cardAssign.GetComponent<SelectedInfo>();
+        Button cardButton = cardAssign.GetComponent<Button>(); 
 
-        for (int i = 0; i < playerCards.Count; i++)
+        while (i < playerCards.Count)
+        {
+            if (!cardButton.interactable)
+            {
+                break;
+            }
+            cardIndex++;
+            cardAssign = GameObject.Find("card " + cardIndex);
+            cardScript = cardAssign.GetComponent<SelectedInfo>();
+            cardButton = cardAssign.GetComponent<Button>();
+        }
+
+        cardScript.ActivateCard(chosenCard);
+
+        for (i = 0; i < playerCards.Count; i++)
         {
             newHandValue += playerCards[i];
         }
@@ -114,4 +144,27 @@ public class DealerSystem : MonoBehaviour
             uiSystem.cardButtons[cardNum - 1].interactable = false;
         }
     }
+
+    // achived dupe system
+
+    /*for (int i = 0;i < playerCards.Count;i++) // making sure card values dont overwrite each other in the list
+{
+    if (playerCards[i] > 0)
+    {
+        cardIndex++;
+    }
+
+    if (playerCards[i] == chosenCard) // if theres an identical value, move the space
+    {
+        while (playerCards[cardIndex] > 0)
+        {
+            cardIndex++;
+            Debug.Log("cardIndex = " + cardIndex);
+            if (cardIndex == playerCards.Count - 1)
+            {
+                break;
+            }
+        }
+    }
+}*/
 }
