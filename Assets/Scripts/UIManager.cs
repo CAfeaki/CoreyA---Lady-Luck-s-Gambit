@@ -16,16 +16,16 @@ public class UIManager : MonoBehaviour
     public int healthStat;
     public int currHealth;
 
-    public Text attackStatText;
-    public Text graceStatText;
-    public Text healthStatText;
+    public Text attackStatNum;
+    public Text graceStatNum;
+    public Text healthStatNum;
+    public Text handStatNum;
 
     [Header("Character Moveset")]
     public string[] activeMoveset = new string[3];
     public Text[] fightButtonText; 
 
     [Header("Button Manager")]
-    //public GameObject fightButton;
     public GameObject fightOptions;
 
     void Start()
@@ -50,9 +50,11 @@ public class UIManager : MonoBehaviour
             healthStat = activeCharacter.healthStat;
             currHealth = activeCharacter.currHealth;
 
-            attackStatText.text = attackStat.ToString();
-            graceStatText.text = graceStat.ToString();
-            healthStatText.text = currHealth.ToString() + "/" + healthStat.ToString();
+            attackStatNum.text = attackStat.ToString();
+            graceStatNum.text = graceStat.ToString();
+            healthStatNum.text = currHealth.ToString() + "/" + healthStat.ToString();
+            DealerSystem dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+            handStatNum.text = dealerScript.playerHandValue.ToString();
         }
     }
 

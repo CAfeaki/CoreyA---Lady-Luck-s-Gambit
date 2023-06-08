@@ -119,7 +119,11 @@ public class CombatManager : MonoBehaviour
 
     public void PullAction()
     {
-        Debug.Log("meow");
+        DealerSystem dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        if (dealerScript.playerCards.Count < 3)
+        {
+            dealerScript.CardPull();
+        }
     }
 
 

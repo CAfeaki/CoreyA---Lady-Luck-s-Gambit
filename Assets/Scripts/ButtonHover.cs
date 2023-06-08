@@ -8,14 +8,21 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 {
     public GameObject descriptionBox;
     public Text descText;
-    public int cardNumber;
+    public int cardType;
+    public int cardNum;
     public int moveIndex;
     public Character activeCharacter;
+    public DealerSystem dealerScript;
+    public Button cardButton;
+    public SelectedInfo cardScript;
 
     void Start()
     {
-        cardNumber = this.GetComponent<SelectedInfo>().cardType;
+        cardScript = this.GetComponent<SelectedInfo>();
+        cardType = this.GetComponent<SelectedInfo>().cardType;
+        cardButton = gameObject.GetComponent<Button>();
         moveIndex = this.GetComponent<SelectedInfo>().moveType;
+        dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
     }
 
     void Update()
@@ -25,19 +32,30 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        descriptionBox.SetActive(true);
-        if (cardNumber != 0)
+        if (cardType != 0)
         {
-            switch (cardNumber)
+            switch (cardType)
             {
                 case 1:
-                    descText.text = "card 1";
+                    if (cardButton.interactable)
+                    {
+                        descriptionBox.SetActive(true);
+                        descText.text = cardScript.cardNum.ToString();
+                    }
                     break;
                 case 2:
-                    descText.text = "card 2";
+                    if (cardButton.interactable)
+                    {
+                        descriptionBox.SetActive(true);
+                        descText.text = cardScript.cardNum.ToString();
+                    }
                     break;
                 case 3:
-                    descText.text = "card 3";
+                    if (cardButton.interactable)
+                    {
+                        descriptionBox.SetActive(true);
+                        descText.text = cardScript.cardNum.ToString();
+                    }
                     break;
             }
         }
