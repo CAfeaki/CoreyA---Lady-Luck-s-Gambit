@@ -523,7 +523,6 @@ public class DealerSystem : MonoBehaviour
             ActivateCards(cardData.cardNum, true, false, false);
             playerHandValue -= cardData.cardNum;
             int cardIndex = playerCards.IndexOf(cardData.cardNum);
-            Debug.Log(cardIndex);
             playerCards.RemoveAt(cardIndex);
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
             uiSystem.cardButtons[cardData.cardType - 1].interactable = false;

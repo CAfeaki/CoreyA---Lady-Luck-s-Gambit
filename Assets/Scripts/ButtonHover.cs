@@ -109,36 +109,36 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     if (activeCharacter.characterNum == 1)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Deals attack stat";
+                        descText.text = "Deals <b>Attack</b> stat to enemy target.";
                     }
                     if (activeCharacter.characterNum == 2)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Deals attack stat";
+                        descText.text = "Deals <b>Attack</b> stat to enemy target.";
                     }
                     break;
                 case 2:
                     if (activeCharacter.characterNum == 1)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Deals attack stat x 2. Takes a turn to charge";
+                        descText.text = "Deals double your <b>Attack</b> to enemy target. Takes a turn to charge.";
                     }
                     if (activeCharacter.characterNum == 2)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Restores HP equal to grace stat to an ally.";
+                        descText.text = "Restores <b>Health</b> to your ally equal to your <b>Grace</b>.";
                     }
                     break;
                 case 3:
                     if (activeCharacter.characterNum == 1)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Deals attack stat / 2 to all enemies";
+                        descText.text = "Deals half of your <b>Attack</b> to all enemies.";
                     }
                     if (activeCharacter.characterNum == 2)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Deals attack stat and heals equal to the damage dealt";
+                        descText.text = "Deals your <b>Attack</b> to enemy target and restores the amount of damage done to your <b>Health</b>.";
                     }
                     break;
 

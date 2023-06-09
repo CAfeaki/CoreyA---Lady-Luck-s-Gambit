@@ -23,6 +23,7 @@ public class TurnManager : MonoBehaviour
     public Enemy targetToReturn;
 
     public int activePlayers;
+    public GameObject restartButton;
 
     void Start()
     {
@@ -61,6 +62,7 @@ public class TurnManager : MonoBehaviour
             roundsHad = 0;
             Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
             announcementText.enabled = true;
+            restartButton.SetActive(true);
 
             foreach (Button actionButton in allActionButtons)
             {

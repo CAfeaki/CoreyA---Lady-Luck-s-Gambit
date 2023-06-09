@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class CombatManager : MonoBehaviour
 
     void Update()
     {
-        if (turnManager.turnNumber <= 2)
+        if (turnManager.turnNumber <= 2 && turnManager.turnNumber != 0)
         {
             activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().characterScripts[turnManager.turnNumber - 1];
         }
@@ -154,6 +155,11 @@ public class CombatManager : MonoBehaviour
         {
             cardButton.interactable = false;
         }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("CombatScene");
     }
 
 

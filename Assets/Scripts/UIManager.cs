@@ -50,8 +50,16 @@ public class UIManager : MonoBehaviour
 
     public void DisplayRoundInfo()
     {
-        roundsCounter.text = turnManager.roundsHad.ToString();
-        turnCounter.text = turnManager.turnNumber.ToString();
+        if (turnManager.turnNumber < 3)
+        {
+            roundsCounter.text = turnManager.roundsHad.ToString();
+            turnCounter.text = turnManager.turnNumber.ToString() + " (Your turn!)";
+        }
+        else
+        {
+            roundsCounter.text = turnManager.roundsHad.ToString();
+            turnCounter.text = turnManager.turnNumber.ToString();
+        }
     }
 
     public void DisplayStats()
