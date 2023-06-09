@@ -17,9 +17,16 @@ public class Character : MonoBehaviour
     public bool char2PassDone = false;
     public int attackCombo = 0;
 
+    public int baseAttack;
+    public int baseGrace;
+    public int baseHealth;
+
     void Start()
     {
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        baseAttack = attackStat;
+        baseGrace = graceStat;
+        baseHealth = healthStat;
     }
 
     void Update()
@@ -46,6 +53,11 @@ public class Character : MonoBehaviour
                 deadText.SetActive(false);
                 turnManager.deadChar = 0;
             }
+        }
+
+        if (currHealth > healthStat)
+        {
+            currHealth = healthStat;
         }
     }
 

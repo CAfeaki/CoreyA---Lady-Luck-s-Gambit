@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DealerSystem : MonoBehaviour
 {
-    private List<int> cardsInPlay = new List<int>();
+    [SerializeField] private List<int> cardsInPlay = new List<int>();
     private List<int> cardCounter = new List<int>();
     public List<int> playerCards = new List<int>();
     public int chosenCard;
@@ -53,10 +53,10 @@ public class DealerSystem : MonoBehaviour
 
     public void CardPull(bool isPlayer, Enemy enemyScript)
     {
-        int randomNum = 0;// = Random.Range(0, cardsInPlay.Count - 1);
+        int randomNum = Random.Range(0, cardsInPlay.Count - 1);
         chosenCard = cardsInPlay[randomNum];
-        cardCounter[randomNum+1] -= 1;
-        if (cardCounter[randomNum+1] == 0)
+        cardCounter[randomNum] -= 1;
+        if (cardCounter[randomNum] == 0)
         {
             cardsInPlay.RemoveAt(randomNum+1);
             cardCounter.RemoveAt(randomNum+1);
@@ -66,6 +66,7 @@ public class DealerSystem : MonoBehaviour
             playerCards.Add(chosenCard);
             PlayerHand();
             cardIndex = 0;
+            ActivateCards(chosenCard, false, false, true);
             if (playerHandValue == 21)
             {
                 combatManager.jackpotButton.SetActive(true);
@@ -76,12 +77,22 @@ public class DealerSystem : MonoBehaviour
                 playerCards.Clear();
                 playerHandValue = 0;
                 UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
-                foreach (Button cardButton in uiSystem.cardButtons)
+                foreach (Button cardButton in uiSystem.cardButtons) // reset cards in bust
                 {
                     cardButton.interactable = false;
                 }
+                foreach (Character CS in uiManager.characterScripts)
+                {
+                    CS.attackStat = CS.baseAttack;
+                    CS.graceStat = CS.baseGrace;
+                    CS.healthStat = CS.baseHealth;
+                    if (CS.currHealth > CS.healthStat)
+                    {
+                        CS.currHealth = CS.healthStat;
+                    }
+                }
+
             }
-            ActivateCards(chosenCard, false, false);
         }
         else if (!isPlayer)
         {
@@ -124,14 +135,24 @@ public class DealerSystem : MonoBehaviour
     }
 
 
+    void ActiveCounter(int cardNum, bool addToCounter, bool resetFromCounter)
+    {
+        if (addToCounter)
+        {
+            roundToEnd.Add(turnManager.roundsHad + 2);
+            turnToEnd.Add(activeCharacter.characterNum);
+            cardToEnd.Add(cardNum);
+        }
+        else if (resetFromCounter)
+        {
+            roundToEnd.RemoveAt(0);
+            turnToEnd.RemoveAt(0);
+            cardToEnd.RemoveAt(0);
+            Debug.Log("Effects wore off!");
+        }
+    }
 
-
-
-
-
-
-
-    public void ActivateCards(int chosenCardNum, bool beingPlayed, bool resetBuff)
+    public void ActivateCards(int chosenCardNum, bool beingPlayed, bool resetBuff, bool activatePassive)
     {
         switch (chosenCardNum) 
         {
@@ -141,21 +162,13 @@ public class DealerSystem : MonoBehaviour
                     activeCharacter.attackStat += 3;
                     activeCharacter.graceStat += 3;
                     activeCharacter.HealCharacter(3);
-
-                    roundToEnd.Add(turnManager.roundsHad + 2);
-                    turnToEnd.Add(activeCharacter.characterNum);
-                    cardToEnd.Add(chosenCardNum);
+                    ActiveCounter(chosenCardNum, true, false);
                 }
                 else if (resetBuff)
                 {
                     activeCharacter.attackStat -= 3;
                     activeCharacter.graceStat -= 3;
-
-                    roundToEnd.RemoveAt(0);
-                    turnToEnd.RemoveAt(0);
-                    cardToEnd.RemoveAt(0);
-
-                    Debug.Log("card 1 ended!");
+                    ActiveCounter(0, false, true);
                 }
 
                 break;
@@ -165,44 +178,272 @@ public class DealerSystem : MonoBehaviour
                     activeCharacter.attackStat += 4;
                     activeCharacter.graceStat += 4;
                     activeCharacter.HealCharacter(4);
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 4;
+                    activeCharacter.graceStat -= 4;
+                    ActiveCounter(0, false, true);
                 }
                 break;
             case 3:
                 if (beingPlayed)
                 {
-                    activeCharacter.attackStat += 4;
-                    activeCharacter.graceStat += 4;
-                    activeCharacter.HealCharacter(4);
+                    activeCharacter.attackStat += 5;
+                    activeCharacter.graceStat += 5;
+                    activeCharacter.HealCharacter(5);
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 5;
+                    activeCharacter.graceStat -= 5;
+                    ActiveCounter(0, false, true);
                 }
                 break;
             case 4:
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat += 2;
+                    activeCharacter.healthStat += 2;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.attackStat -= 2;
+                    activeCharacter.healthStat -= 2;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 4;
+                    activeCharacter.healthStat += 4;
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 4;
+                    activeCharacter.healthStat -= 4;
+                    ActiveCounter(0, false, true);
+                }
                 break;
             case 5:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.graceStat += 2;
+                    activeCharacter.healthStat += 2;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.graceStat -= 2;
+                    activeCharacter.healthStat -= 2;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.graceStat += 4;
+                    activeCharacter.healthStat += 4;
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.graceStat -= 4;
+                    activeCharacter.healthStat -= 4;
+                    ActiveCounter(0, false, true);
+                }
                 break;
             case 6:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat += 2;
+                    activeCharacter.graceStat += 2;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.attackStat -= 2;
+                    activeCharacter.graceStat -= 2;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 4;
+                    activeCharacter.graceStat += 4;
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 4;
+                    activeCharacter.graceStat -= 4;
+                    ActiveCounter(0, false, true);
+                }
                 break;
             case 7:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat += 3;
+                    activeCharacter.graceStat += 3;
+                    activeCharacter.healthStat += 3;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.attackStat -= 3;
+                    activeCharacter.graceStat -= 3;
+                    activeCharacter.healthStat -= 3;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 7;
+                    activeCharacter.healthStat += 7;
+                    activeCharacter.graceStat += 3;
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 7;
+                    activeCharacter.healthStat -= 7;
+                    activeCharacter.graceStat -= 3;
+                    ActiveCounter(0, false, true);
+                }
                 break;
             case 8:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat += 4;
+                    activeCharacter.graceStat += 4;
+                    activeCharacter.healthStat += 4;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.attackStat -= 4;
+                    activeCharacter.graceStat -= 4;
+                    activeCharacter.healthStat -= 4;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 4;
+                    activeCharacter.healthStat += 8;
+                    activeCharacter.graceStat += 8;
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 4;
+                    activeCharacter.healthStat -= 8;
+                    activeCharacter.graceStat -= 8;
+                    ActiveCounter(0, false, true);
+                }
                 break;
             case 9:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat += 5;
+                    activeCharacter.graceStat += 5;
+                    activeCharacter.healthStat += 5;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.attackStat -= 5;
+                    activeCharacter.graceStat -= 5;
+                    activeCharacter.healthStat -= 5;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 9;
+                    activeCharacter.healthStat += 5;
+                    activeCharacter.graceStat += 9;
+                    ActiveCounter(chosenCardNum, true, false);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 9;
+                    activeCharacter.healthStat -= 5;
+                    activeCharacter.graceStat -= 9;
+                    ActiveCounter(0, false, true);
+                }
                 break;
             case 10:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.healthStat += 10;
+                    activeCharacter.HealCharacter(10);
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.healthStat -= 10;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 10;
+                    activeCharacter.graceStat += 10;
+                    activeCharacter.healthStat += 10;
+                    activeCharacter.HealCharacter(10);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 10;
+                    activeCharacter.graceStat -= 10;
+                    activeCharacter.healthStat -= 10;
+                }
                 break;
             case 11:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.graceStat += 10;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.graceStat -= 10;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 10;
+                    activeCharacter.graceStat += 10;
+                    activeCharacter.healthStat += 10;
+                    activeCharacter.HealCharacter(10);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 10;
+                    activeCharacter.graceStat -= 10;
+                    activeCharacter.healthStat -= 10;
+                }
                 break;
             case 12:
-                Debug.Log(chosenCardNum);
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat += 10;
+                }
+                else if (activatePassive && resetBuff)
+                {
+                    activeCharacter.attackStat -= 10;
+                }
+                else if (beingPlayed)
+                {
+                    activeCharacter.attackStat += 10;
+                    activeCharacter.graceStat += 10;
+                    activeCharacter.healthStat += 10;
+                    activeCharacter.HealCharacter(10);
+                }
+                else if (resetBuff)
+                {
+                    activeCharacter.attackStat -= 10;
+                    activeCharacter.graceStat -= 10;
+                    activeCharacter.healthStat -= 10;
+                }
                 break;
             case 13:
-                Debug.Log(chosenCardNum);
+                int highestStat = (Mathf.Max(Mathf.Max(activeCharacter.attackStat, activeCharacter.healthStat), activeCharacter.graceStat));
+                if (activatePassive)
+                {
+                    activeCharacter.attackStat = highestStat;
+                    activeCharacter.graceStat = highestStat;
+                    activeCharacter.healthStat = highestStat;
+                    activeCharacter.HealCharacter(highestStat);
+                }
+                else if (activatePassive && resetBuff) // figure out how to reset
+                {
+                    activeCharacter.attackStat = highestStat;
+                    activeCharacter.graceStat = highestStat;
+                    activeCharacter.healthStat = highestStat;
+                    activeCharacter.HealCharacter(highestStat);
+                }
                 break;
         }
     }
@@ -213,7 +454,11 @@ public class DealerSystem : MonoBehaviour
         if (firstCardPlay)
         {
             firstCardPlay = false;
-            ActivateCards(playerCards[cardNum-1], true, false);
+            if (playerCards[cardNum - 1] > 3)
+            {
+                ActivateCards(playerCards[cardNum - 1], false, true, true);
+            }
+            ActivateCards(playerCards[cardNum - 1], true, false, false);
             playerHandValue -= playerCards[cardNum - 1];
             playerCards.RemoveAt(cardNum - 1);
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();

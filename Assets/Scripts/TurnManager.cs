@@ -90,21 +90,12 @@ public class TurnManager : MonoBehaviour
     public void SetCharTurn()
     {
         dealerSystem.firstCardPlay = true;
-        if (chargeAttackActive)
-        {
-            if (roundsHad == roundToReturn)
-            {
-                Character characterScript = characters[0].GetComponent<Character>();
-                chargeAttackActive = false;
-                characterScript.Char1Move2(targetToReturn);
-            }
-        }
 
         if (dealerSystem.roundToEnd.Count != 0)
         {
             if (dealerSystem.roundToEnd[0] == roundsHad && dealerSystem.turnToEnd[0] == dealerSystem.activeCharacter.characterNum)
             {
-                dealerSystem.ActivateCards(dealerSystem.cardToEnd[0], false, true);
+                dealerSystem.ActivateCards(dealerSystem.cardToEnd[0], false, true, false);
             }
         }
 
@@ -121,6 +112,15 @@ public class TurnManager : MonoBehaviour
             foreach (Button actionButton in allActionButtons)
             {
                 actionButton.interactable = true;
+            }
+        }
+        if (chargeAttackActive)
+        {
+            if (roundsHad == roundToReturn)
+            {
+                Character characterScript = characters[0].GetComponent<Character>();
+                chargeAttackActive = false;
+                characterScript.Char1Move2(targetToReturn);
             }
         }
 
@@ -143,7 +143,6 @@ public class TurnManager : MonoBehaviour
         if (openFightOptions)
         {
             openFightOptions.SetActive(false);
-
         }
         if (openDescWindow)
         {

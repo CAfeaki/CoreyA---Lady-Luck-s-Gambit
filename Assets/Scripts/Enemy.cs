@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Turn Management")]
     public int enemyNumber;
-    public TurnManager turnManager;
+    private TurnManager turnManager;
 
     [Header("Enemy Stats")]
     public int attackStat;
@@ -30,7 +30,6 @@ public class Enemy : MonoBehaviour
     public List<int> enemyCards = new List<int>();
 
     [Header("Spawning")]
-    public GameObject enemyPrefab;
     public GameObject selectionArrow;
 
     void Start()
@@ -42,6 +41,7 @@ public class Enemy : MonoBehaviour
         characterScripts.Add(char2);
 
         dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
 
         EnemyStats();
         DisplayEnemyStats();
