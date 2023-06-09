@@ -149,6 +149,7 @@ public class TurnManager : MonoBehaviour
             openDescWindow.SetActive(false);
         }
         turnNumber++;
+        combatManager.targetSelect = false;
         pullReset = true;
         SetCharTurn();
     }

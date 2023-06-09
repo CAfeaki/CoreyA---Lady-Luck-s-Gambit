@@ -1085,7 +1085,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57aa7d667f28db4399d7c4ff72f955a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardsInPlay: 
   playerCards: 
   chosenCard: 0
   cardAssign: {fileID: 0}
@@ -1097,6 +1096,9 @@ MonoBehaviour:
   roundToEnd: 
   turnToEnd: 
   cardToEnd: 
+  charScripts:
+  - {fileID: 708002363}
+  - {fileID: 132009615}
 --- !u!1 &364448837
 GameObject:
   m_ObjectHideFlags: 0
