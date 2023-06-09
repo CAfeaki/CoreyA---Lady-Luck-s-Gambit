@@ -84,9 +84,9 @@ public class Enemy : MonoBehaviour
 
     public void EnemyStats()
     {
-        attackStat = Random.Range(3, 7);
+        attackStat = Random.Range(3, 10);
         graceStat = Random.Range(2, 6);
-        healthStat = Random.Range(40, 71);
+        healthStat = Random.Range(50, 90);
         currentEnemyHealth = healthStat;
     }
 

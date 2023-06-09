@@ -57,7 +57,7 @@ public class DealerSystem : MonoBehaviour
 
     public void CardPull(bool isPlayer, Enemy enemyScript)
     {
-        int randomNum = 3;// = Random.Range(0, cardsInPlay.Count - 1);
+        int randomNum = Random.Range(0, cardsInPlay.Count - 1);
         chosenCard = cardsInPlay[randomNum];
         cardCounter[randomNum] -= 1;
         if (cardCounter[randomNum] == 0)
@@ -500,7 +500,7 @@ public class DealerSystem : MonoBehaviour
                     activeCharacter.healthStat = highestStat;
                     activeCharacter.HealCharacter(highestStat);
                 }
-                else if (activatePassive && resetBuff) // figure out how to reset
+                else if (activatePassive && resetBuff) 
                 {
                     activeCharacter.attackStat = activeCharacter.baseAttack;
                     activeCharacter.graceStat = activeCharacter.baseGrace;
@@ -511,20 +511,22 @@ public class DealerSystem : MonoBehaviour
     }
 
 
-    public void PlayCard(int cardNum)
+    public void PlayCard(SelectedInfo cardData)
     {
         if (firstCardPlay)
         {
-            firstCardPlay = false;
-            if (playerCards[cardNum - 1] > 3)
+            //firstCardPlay = false;
+            if (cardData.cardNum > 3)
             {
-                ActivateCards(playerCards[cardNum - 1], false, true, true);
+                ActivateCards(cardData.cardNum, false, true, true);
             }
-            ActivateCards(playerCards[cardNum - 1], true, false, false);
-            playerHandValue -= playerCards[cardNum - 1];
-            playerCards.RemoveAt(cardNum - 1);
+            ActivateCards(cardData.cardNum, true, false, false);
+            playerHandValue -= cardData.cardNum;
+            int cardIndex = playerCards.IndexOf(cardData.cardNum);
+            Debug.Log(cardIndex);
+            playerCards.RemoveAt(cardIndex);
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
-            uiSystem.cardButtons[cardNum - 1].interactable = false;
+            uiSystem.cardButtons[cardData.cardType - 1].interactable = false;
         }
     }
 

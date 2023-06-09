@@ -57,8 +57,8 @@ public class TurnManager : MonoBehaviour
         if (enemies.Count == 0)
         {
             chargeAttackActive = false;
-            turnNumber = 10;
-            roundsHad = 20;
+            turnNumber = 0;
+            roundsHad = 0;
             Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
             announcementText.enabled = true;
 
@@ -90,6 +90,15 @@ public class TurnManager : MonoBehaviour
     public void SetCharTurn()
     {
         dealerSystem.firstCardPlay = true;
+
+        if (turnNumber == 0)
+        {
+            foreach (Button actionButton in allActionButtons)
+            {
+                actionButton.interactable = false;
+            }
+            roundsHad = 0;
+        }
 
         if (dealerSystem.roundToEnd.Count != 0)
         {
