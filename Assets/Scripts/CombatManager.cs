@@ -58,7 +58,6 @@ public class CombatManager : MonoBehaviour
 
     public void ActivateTargetSelect(int moveNum)
     {
-
         moveButtonNum = moveNum;
         if (moveNum == 2 && activeCharacter.characterNum == 2)
         {
@@ -116,23 +115,26 @@ public class CombatManager : MonoBehaviour
 
     public void HealAction()
     {
-        if (activeCharacter.currHealth < activeCharacter.healthStat)
+        if (activeCharacter.characterNum == 1)
         {
-            activeCharacter.currHealth += activeCharacter.graceStat;
-            if (activeCharacter.currHealth > activeCharacter.healthStat)
-            {
-                activeCharacter.currHealth = activeCharacter.healthStat;
-            }
+            activeCharacter.attackStat -= activeCharacter.attackCombo;
+            activeCharacter.attackCombo = 0;
         }
+        activeCharacter.HealCharacter(activeCharacter.graceStat);
         turnManager.TurnEnd();
     }
 
     public void PullAction()
     {
-        if (dealerScript.playerCards.Count < 3)
+        if (activeCharacter.characterNum == 1)
+        {
+            activeCharacter.attackStat -= activeCharacter.attackCombo;
+            activeCharacter.attackCombo = 0;
+        }
+        if (dealerScript.playerCards.Count < 3 && turnManager.pullReset)
         {
             dealerScript.CardPull(true, null);
-            turnManager.TurnEnd();
+            turnManager.pullReset = false;
         }
     }
 

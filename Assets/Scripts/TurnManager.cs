@@ -16,6 +16,7 @@ public class TurnManager : MonoBehaviour
     public GameObject[] characters;
     public Button[] allActionButtons;
     public int deadChar;
+    public bool pullReset = true;
 
     public bool chargeAttackActive = false;
     public int roundToReturn;
@@ -52,15 +53,24 @@ public class TurnManager : MonoBehaviour
     void Update()
     {
         activePlayers = enemies.Count + characters.Length;
-        if (chargeAttackActive)
-        {
-            ChargeAttack();
-        }
 
         if (enemies.Count == 0)
         {
+            chargeAttackActive = false;
+            turnNumber = 10;
+            roundsHad = 20;
             Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
             announcementText.enabled = true;
+
+            foreach (Button actionButton in allActionButtons)
+            {
+                actionButton.interactable = false;
+            }
+        }
+
+        if (chargeAttackActive)
+        {
+            ChargeAttack();
         }
 
         if (deadChar != 0)
@@ -71,7 +81,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (turnNumber > activePlayers)
+        if (turnNumber > activePlayers && enemies.Count > 0)
         {
             SetCharTurn();
         }
@@ -89,6 +99,21 @@ public class TurnManager : MonoBehaviour
                 characterScript.Char1Move2(targetToReturn);
             }
         }
+
+        if (dealerSystem.roundToEnd.Count != 0)
+        {
+            if (dealerSystem.roundToEnd[0] == roundsHad && dealerSystem.turnToEnd[0] == dealerSystem.activeCharacter.characterNum)
+            {
+                dealerSystem.ActivateCards(dealerSystem.cardToEnd[0], false, true);
+            }
+        }
+
+        if (turnNumber == 2)
+        {
+            Character characterScript = characters[1].GetComponent<Character>();
+            characterScript.char2PassDone = false;
+        }
+
         if (turnNumber > activePlayers)
         {
             roundsHad++;
@@ -125,6 +150,7 @@ public class TurnManager : MonoBehaviour
             openDescWindow.SetActive(false);
         }
         turnNumber++;
+        pullReset = true;
         SetCharTurn();
     }
 

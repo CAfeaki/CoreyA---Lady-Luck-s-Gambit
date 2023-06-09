@@ -14,6 +14,8 @@ public class Character : MonoBehaviour
     public Slider healthBar;
     private TurnManager turnManager;
     public GameObject deadText;
+    public bool char2PassDone = false;
+    public int attackCombo = 0;
 
     void Start()
     {
@@ -31,6 +33,12 @@ public class Character : MonoBehaviour
             turnManager.deadChar = characterNum;
         }
 
+        if (turnManager.turnNumber == 2 && !char2PassDone) // probably a prpblem rn
+        {
+            char2PassDone = true;
+            CharPassive(2, null);
+        }
+
         if (deadText.activeSelf)
         {
             if (currHealth > 0)
@@ -41,11 +49,32 @@ public class Character : MonoBehaviour
         }
     }
 
+    void CharPassive(int activePass, Enemy enemyScript)
+    {
+        if (activePass == 1)
+        {
+            attackStat += 1;
+        }
+        if (activePass == 2)
+        {
+            if (currHealth < healthStat)
+            {
+                currHealth += 1;
+                if (currHealth >= healthStat)
+                {
+                    currHealth = healthStat;
+                }
+            }
+        }
+    }
+
     public void Move1(Enemy enemyScript)
     {
         if (characterNum == 1)
         {
+            attackCombo++;
             enemyScript.currentEnemyHealth -= attackStat;
+            CharPassive(1, enemyScript);
         }
         if (characterNum == 2)
         {
@@ -77,7 +106,9 @@ public class Character : MonoBehaviour
 
     public void Char1Move2(Enemy enemyScript)
     {
+        CharPassive(1, enemyScript);
         enemyScript.currentEnemyHealth -= attackStat * 2 + graceStat;
+        attackCombo++;
         turnManager.chargeAttackActive = false;
         turnManager.TurnEnd();
     }
@@ -86,22 +117,17 @@ public class Character : MonoBehaviour
     {
         if (characterNum == 1)
         {
+            CharPassive(1, enemyScript);
             foreach (Enemy targetScript in turnManager.enemyScripts)
             {
                 targetScript.currentEnemyHealth -= attackStat / 2;
             }
+            attackCombo++;
         }
         if (characterNum == 2)
         {
             enemyScript.currentEnemyHealth -= attackStat;
-            if (currHealth < healthStat)
-            {
-                currHealth += attackStat;
-                if (currHealth > healthStat)
-                {
-                    currHealth = healthStat;
-                }
-            }
+            HealCharacter(attackStat);
         }
     }
 
@@ -109,5 +135,17 @@ public class Character : MonoBehaviour
     {
         healthBar.maxValue = healthStat;
         healthBar.value = currHealth;
+    }
+
+    public void HealCharacter(int amountToHeal)
+    {
+        if (currHealth < healthStat)
+        {
+            currHealth += amountToHeal;
+            if (currHealth > healthStat)
+            {
+                currHealth = healthStat;
+            }
+        }
     }
 }

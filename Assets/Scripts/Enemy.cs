@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("General")]
     private DealerSystem dealerSystem;
+    public int timesTargeted;
 
     [Header("Turn Management")]
     public int enemyNumber;
@@ -72,7 +73,6 @@ public class Enemy : MonoBehaviour
         enemyTarget.currHealth -= attackStat;
 
         int pullChance = Random.Range(0, 11);
-        pullChance = 10;  // take out, this is just for testing!
         if (pullChance == 10)
         {
             dealerSystem.CardPull(false, this);
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour
     {
         attackStat = Random.Range(3, 7);
         graceStat = Random.Range(2, 6);
-        healthStat = Random.Range(20, 40);
+        healthStat = Random.Range(40, 71);
         currentEnemyHealth = healthStat;
     }
 

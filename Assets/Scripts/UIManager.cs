@@ -8,6 +8,11 @@ public class UIManager : MonoBehaviour
     public Character[] characterScripts;
     public Character activeCharacter;
 
+    public Text roundsCounter;
+    public Text turnCounter;
+
+    public TurnManager turnManager;
+
     [Header("Characer Stats")]
     public int characterNum;
     public int characterMovesetActive;
@@ -28,18 +33,25 @@ public class UIManager : MonoBehaviour
     [Header("Button Manager")]
     public GameObject fightOptions;
     public List<Button> cardButtons = new List<Button>();
-    public List<Button> enemyCardButtons = new List<Button>();
+    public List<GameObject> enemyCardButtons = new List<GameObject>();
 
     void Start()
     {
         fightOptions = GameObject.Find("fightOptions");
         fightOptions.SetActive(false);
-
+        turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
     }
 
     void Update()
     {
         DisplayStats();
+        DisplayRoundInfo();
+    }
+
+    public void DisplayRoundInfo()
+    {
+        roundsCounter.text = turnManager.roundsHad.ToString();
+        turnCounter.text = turnManager.turnNumber.ToString();
     }
 
     public void DisplayStats()
