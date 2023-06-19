@@ -55,6 +55,11 @@ public class CombatManager : MonoBehaviour
                 FightTargetSelect(targetNumber);
             }
         }
+        else if (!targetSelect)
+        {
+            FightTargetSelect(targetNumber);
+        }
+
     }
 
     public void ActivateTargetSelect(int moveNum)
@@ -83,7 +88,14 @@ public class CombatManager : MonoBehaviour
             activeArrow.SetActive(false);
         }
         selectionArrow = enemies[currSelectionNum].GetComponent<Enemy>().selectionArrow; //change the arrow
-        selectionArrow.SetActive(true);
+        if (targetSelect)
+        {
+            selectionArrow.SetActive(true);
+        }
+        else 
+        {
+            selectionArrow.SetActive(false);
+        }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {

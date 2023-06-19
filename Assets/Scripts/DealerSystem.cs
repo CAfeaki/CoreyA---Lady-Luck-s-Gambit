@@ -165,6 +165,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat += 3;
                     activeCharacter.graceStat += 3;
+                    activeCharacter.healthStat += 3;
                     activeCharacter.HealCharacter(3);
                     ActiveCounter(chosenCardNum, true, false);
                 }
@@ -172,6 +173,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat -= 3;
                     activeCharacter.graceStat -= 3;
+                    activeCharacter.healthStat -= 3;
                     ActiveCounter(0, false, true);
                 }
 
@@ -181,6 +183,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat += 4;
                     activeCharacter.graceStat += 4;
+                    activeCharacter.healthStat += 4;
                     activeCharacter.HealCharacter(4);
                     ActiveCounter(chosenCardNum, true, false);
                 }
@@ -188,6 +191,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat -= 4;
                     activeCharacter.graceStat -= 4;
+                    activeCharacter.healthStat -= 4;
                     ActiveCounter(0, false, true);
                 }
                 break;
@@ -196,6 +200,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat += 5;
                     activeCharacter.graceStat += 5;
+                    activeCharacter.healthStat += 5;
                     activeCharacter.HealCharacter(5);
                     ActiveCounter(chosenCardNum, true, false);
                 }
@@ -203,11 +208,12 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat -= 5;
                     activeCharacter.graceStat -= 5;
+                    activeCharacter.healthStat -= 5;
                     ActiveCounter(0, false, true);
                 }
                 break;
             case 4:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -228,6 +234,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat += 4;
                     activeCharacter.healthStat += 4;
+                    activeCharacter.HealCharacter(4);
                     ActiveCounter(chosenCardNum, true, false);
                 }
                 else if (resetBuff)
@@ -238,7 +245,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 5:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -259,6 +266,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.graceStat += 4;
                     activeCharacter.healthStat += 4;
+                    activeCharacter.HealCharacter(4);
                     ActiveCounter(chosenCardNum, true, false);
                 }
                 else if (resetBuff)
@@ -269,7 +277,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 6:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -299,7 +307,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 7:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -322,6 +330,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat += 7;
                     activeCharacter.healthStat += 7;
+                    activeCharacter.HealCharacter(7);
                     activeCharacter.graceStat += 3;
                     ActiveCounter(chosenCardNum, true, false);
                 }
@@ -334,7 +343,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 8:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -357,6 +366,7 @@ public class DealerSystem : MonoBehaviour
                 {
                     activeCharacter.attackStat += 4;
                     activeCharacter.healthStat += 8;
+                    activeCharacter.HealCharacter(8);
                     activeCharacter.graceStat += 8;
                     ActiveCounter(chosenCardNum, true, false);
                 }
@@ -369,7 +379,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 9:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -388,10 +398,11 @@ public class DealerSystem : MonoBehaviour
                         charToBuff.healthStat -= 5;
                     }
                 }
-                else if (beingPlayed)
+                else if (beingPlayed && !resetBuff)
                 {
                     activeCharacter.attackStat += 9;
                     activeCharacter.healthStat += 5;
+                    activeCharacter.HealCharacter(5);
                     activeCharacter.graceStat += 9;
                     ActiveCounter(chosenCardNum, true, false);
                 }
@@ -404,7 +415,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 10:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -434,7 +445,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 11:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -463,7 +474,7 @@ public class DealerSystem : MonoBehaviour
                 }
                 break;
             case 12:
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in charScripts)
                     {
@@ -493,7 +504,7 @@ public class DealerSystem : MonoBehaviour
                 break;
             case 13:
                 int highestStat = (Mathf.Max(Mathf.Max(activeCharacter.attackStat, activeCharacter.healthStat), activeCharacter.graceStat));
-                if (activatePassive)
+                if (activatePassive && !resetBuff)
                 {
                     activeCharacter.attackStat = highestStat;
                     activeCharacter.graceStat = highestStat;
@@ -509,7 +520,6 @@ public class DealerSystem : MonoBehaviour
                 break;
         }
     }
-
 
     public void PlayCard(SelectedInfo cardData)
     {
