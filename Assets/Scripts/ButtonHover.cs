@@ -18,7 +18,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public GameObject cardDesc;
     public Text passiveDesc;
     public Text playDesc;
-    private List<string> passiveTexts = new List<string>
+    public List<string> passiveTexts = new List<string>
     {
         "No passive ability.",
         "No passive ability.",
@@ -34,7 +34,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         "+10 to <b>Attack</b>.",
         "All stats become the value of your highest stat."
     };
-    private List<string> playTexts = new List<string>
+    public List<string> playTexts = new List<string>
     {
         "+3 to <b>Attack</b>, <b>Grace</b> and <b>Health</b> for 2 rounds.",
         "+4 to <b>Attack</b>, <b>Grace</b> and <b>Health</b> for 2 rounds.",

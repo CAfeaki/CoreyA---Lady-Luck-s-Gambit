@@ -143,7 +143,16 @@ public class DealerSystem : MonoBehaviour
     {
         if (addToCounter)
         {
-            roundToEnd.Add(turnManager.roundsHad + 2);
+            int roundsActive;
+            if (cardNum >= 10)
+            {
+                roundsActive = 0;
+            }
+            else
+            {
+                roundsActive = 1;
+            }
+            roundToEnd.Add(turnManager.roundsHad + roundsActive);
             turnToEnd.Add(activeCharacter.characterNum);
             cardToEnd.Add(cardNum);
         }
@@ -537,6 +546,27 @@ public class DealerSystem : MonoBehaviour
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
             uiSystem.cardButtons[cardData.cardType - 1].interactable = false;
         }
+    }
+
+    public int DealCards()
+    {
+        int randomNum = Random.Range(0, cardsInPlay.Count - 1);
+        chosenCard = cardsInPlay[randomNum];
+        cardCounter[randomNum] -= 1;
+        if (cardCounter[randomNum] == 0)
+        {
+            cardsInPlay.RemoveAt(randomNum + 1);
+            cardCounter.RemoveAt(randomNum + 1);
+        }
+        return chosenCard;
+    }
+
+    public void FirstDeal(SelectedInfo cardInfo)
+    {
+        playerCards.Add(cardInfo.cardNum);
+        PlayerHand();
+        cardScript.cardNum = cardInfo.cardNum;
+        ActivateCards(cardInfo.cardNum, false, false, true);
     }
 
 

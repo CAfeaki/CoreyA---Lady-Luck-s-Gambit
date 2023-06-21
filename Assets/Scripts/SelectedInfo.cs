@@ -10,6 +10,11 @@ public class SelectedInfo : MonoBehaviour
     public int moveType;
     public Button thisCard;
 
+    [Header("Initial Cards")]
+    public Text cardName;
+    public Text passiveText;
+    public Text playText;
+
     private DealerSystem dealerScript;
 
     void Start()

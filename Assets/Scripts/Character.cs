@@ -21,17 +21,52 @@ public class Character : MonoBehaviour
     public int baseGrace;
     public int baseHealth;
 
+    private GameManager gameManager;
+
+
     void Start()
     {
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
-        baseAttack = attackStat;
-        baseGrace = graceStat;
-        baseHealth = healthStat;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (characterNum == 1)
+        {
+            baseAttack = gameManager.char1BaseAttack;
+            baseGrace = gameManager.char1BaseGrace;
+            baseHealth = gameManager.char1BaseHealth;
+        }
+        else if (characterNum == 2)
+        {
+            baseAttack = gameManager.char2BaseAttack;
+            baseGrace = gameManager.char2BaseGrace;
+            baseHealth = gameManager.char2BaseHealth;
+        }
+        attackStat = baseAttack;
+        graceStat = baseGrace;
+        healthStat = baseHealth;
+    }
+
+    void UpdateGameManager()
+    {
+        if (characterNum == 1)
+        {
+            gameManager.char1Attack = attackStat;
+            gameManager.char1Grace = graceStat;
+            gameManager.char1Health = healthStat;
+            gameManager.char1CurrHealth = currHealth;
+        }
+        else if (characterNum == 2)
+        {
+            gameManager.char2Attack = attackStat;
+            gameManager.char2Grace = graceStat;
+            gameManager.char2Health = healthStat;
+            gameManager.char2CurrHealth = currHealth;
+        }
     }
 
     void Update()
     {
         DisplayCharacterStats();
+        UpdateGameManager();
 
         if (currHealth <= 0)
         {

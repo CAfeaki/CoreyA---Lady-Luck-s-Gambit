@@ -9,10 +9,13 @@ public class CombatManager : MonoBehaviour
     [Header("General")]
     public List<GameObject> enemies = new List<GameObject>();
     public int selectedTargetNum;
-    public TurnManager turnManager;
+    public List<GameObject> startCards = new List<GameObject>();
+    private TurnManager turnManager;
     private Character activeCharacter;
     private DealerSystem dealerScript;
     private UIManager uiManager;
+    private ButtonHover buttonInfo;
+    public int cardNum;
 
     [Header("Fight")]
     private GameObject fightOptions;
@@ -28,10 +31,39 @@ public class CombatManager : MonoBehaviour
         dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        buttonInfo = this.GetComponent<ButtonHover>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemies.Add(enemyObject);
         }
+        foreach (GameObject initialCard in GameObject.FindGameObjectsWithTag("Initial Card"))
+        {
+            startCards.Add(initialCard);
+        }
+        InitialCard();
+    }
+
+    void InitialCard()
+    {
+        foreach (GameObject initialCard in startCards)
+        {
+            cardNum = dealerScript.DealCards();
+            SelectedInfo cardInfo = initialCard.GetComponent<SelectedInfo>();
+            cardInfo.cardNum = cardNum;
+            cardInfo.cardName.text = cardNum.ToString();
+            cardInfo.passiveText.text = buttonInfo.passiveTexts[cardNum - 1];
+            cardInfo.playText.text = buttonInfo.playTexts[cardNum - 1];
+        }
+        dealerScript.chosenCard = 0;
+    }
+
+    public void InitialCardChosen(int cardNumIndex)
+    {
+        SelectedInfo cardScript = startCards[cardNumIndex - 1].GetComponent<SelectedInfo>();
+        cardScript.ActivateCard(cardScript.cardNum);
+        dealerScript.FirstDeal(cardScript);
+        GameObject cardScreen = GameObject.Find("firstPickScreen");
+        cardScreen.SetActive(false);
     }
 
     void Update()
@@ -81,6 +113,11 @@ public class CombatManager : MonoBehaviour
 
     public void FightTargetSelect(int currSelectionNum)
     {
+        if (enemies.Count == 0)
+        {
+            targetSelect = false;
+            return;
+        }
         GameObject selectionArrow;
         foreach (GameObject activeEnemy in enemies)
         {
