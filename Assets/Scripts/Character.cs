@@ -33,12 +33,14 @@ public class Character : MonoBehaviour
             baseAttack = gameManager.char1BaseAttack;
             baseGrace = gameManager.char1BaseGrace;
             baseHealth = gameManager.char1BaseHealth;
+            currHealth = gameManager.char1CurrHealth;
         }
         else if (characterNum == 2)
         {
             baseAttack = gameManager.char2BaseAttack;
             baseGrace = gameManager.char2BaseGrace;
             baseHealth = gameManager.char2BaseHealth;
+            currHealth = gameManager.char2CurrHealth;
         }
         attackStat = baseAttack;
         graceStat = baseGrace;

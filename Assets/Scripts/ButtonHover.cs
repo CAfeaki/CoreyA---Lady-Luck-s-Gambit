@@ -50,6 +50,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         "+10 to all stats for 1 round.",
         "No play ability."
     };
+    private string cardName;
+    private int charNum;
 
     void Start()
     {
@@ -57,6 +59,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         cardType = this.GetComponent<SelectedInfo>().cardType;
         cardButton = gameObject.GetComponent<Button>();
         moveIndex = this.GetComponent<SelectedInfo>().moveType;
+        charNum = this.GetComponent<SelectedInfo>().characterNum;
         dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
     }
 
@@ -70,13 +73,32 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (cardType != 0)
         {
             cardDesc.SetActive(true);
+            if (cardScript.cardNum > 10)
+            {
+                switch (cardScript.cardNum)
+                {
+                    case 11:
+                        cardName = "Jack";
+                        break;
+                    case 12:
+                        cardName = "Queen";
+                        break;
+                    case 13:
+                        cardName = "King";
+                        break;
+                }
+            }
+            else
+            {
+                cardName = cardScript.cardNum.ToString();
+            }
             switch (cardType)
             {
                 case 1:
                     if (cardButton.interactable)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Card: " + cardScript.cardNum.ToString();
+                        descText.text = "Card: " + cardName;
                         passiveDesc.text = passiveTexts[cardScript.cardNum - 1];
                         playDesc.text = playTexts[cardScript.cardNum - 1];
                     }
@@ -85,7 +107,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     if (cardButton.interactable)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Card: " + cardScript.cardNum.ToString();
+                        descText.text = "Card: " + cardName;
                         passiveDesc.text = passiveTexts[cardScript.cardNum - 1];
                         playDesc.text = playTexts[cardScript.cardNum - 1];
                     }
@@ -94,14 +116,14 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     if (cardButton.interactable)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Card: " + cardScript.cardNum.ToString();
+                        descText.text = "Card: " + cardName;
                         passiveDesc.text = passiveTexts[cardScript.cardNum - 1];
                         playDesc.text = playTexts[cardScript.cardNum - 1];
                     }
                     break;
             }
         }
-        if (moveIndex != 0)
+        else if (moveIndex != 0)
         {
             switch (moveIndex)
             {
@@ -142,6 +164,23 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     break;
 
+            }
+        }
+        else if (charNum != 0)
+        {
+            if (cardDesc.activeSelf)
+            {
+                cardDesc.SetActive(false);
+            }
+            if (charNum == 1)
+            {
+                descriptionBox.SetActive(true);
+                descText.text = "<b>Spark to a Flame</b>\n<size=36>For every consecutive turn Sun spends attacking an enemy, they get +1 to their <b>Attack</b> stat. This resets when Sun takes a different move.</size>";
+            }
+            else if (charNum == 2)
+            {
+                descriptionBox.SetActive(true);
+                descText.text = "<b>Rises the Moon</b>\n<size=36>At the start of each turn, Moon regains +1 to their <b>Health</b>, regardless of whether they’re conscious or not.</size>";
             }
         }
     }

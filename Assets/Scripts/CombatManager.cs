@@ -50,7 +50,25 @@ public class CombatManager : MonoBehaviour
             cardNum = dealerScript.DealCards();
             SelectedInfo cardInfo = initialCard.GetComponent<SelectedInfo>();
             cardInfo.cardNum = cardNum;
-            cardInfo.cardName.text = cardNum.ToString();
+            if (cardInfo.cardNum > 10)
+            {
+                switch (cardInfo.cardNum)
+                {
+                    case 11:
+                        cardInfo.cardName.text = "Jack";
+                        break;
+                    case 12:
+                        cardInfo.cardName.text = "Queen";
+                        break;
+                    case 13:
+                        cardInfo.cardName.text = "King";
+                        break;
+                }
+            }
+            else
+            {
+                cardInfo.cardName.text = cardNum.ToString();
+            }
             cardInfo.passiveText.text = buttonInfo.passiveTexts[cardNum - 1];
             cardInfo.playText.text = buttonInfo.playTexts[cardNum - 1];
         }
@@ -195,7 +213,7 @@ public class CombatManager : MonoBehaviour
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             Character char1Script = GameObject.Find("Char1").GetComponent<Character>();
             Character char2Script = GameObject.Find("Char2").GetComponent<Character>();
-            enemyScript.currentEnemyHealth -= char1Script.attackStat + char2Script.graceStat;
+            enemyScript.currentEnemyHealth -= char1Script.attackStat + char2Script.graceStat * 2;
         }
         jackpotButton.SetActive(false);
         dealerScript.playerHandValue = 0;

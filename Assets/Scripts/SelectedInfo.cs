@@ -8,6 +8,7 @@ public class SelectedInfo : MonoBehaviour
     public int cardType;
     public int cardNum;
     public int moveType;
+    public int characterNum;
     public Button thisCard;
 
     [Header("Initial Cards")]

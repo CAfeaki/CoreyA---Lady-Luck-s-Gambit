@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
     public GameObject fightOptions;
     public List<Button> cardButtons = new List<Button>();
     public List<GameObject> enemyCardButtons = new List<GameObject>();
+    public GameObject infoPanel;
 
     void Start()
     {
@@ -117,6 +118,20 @@ public class UIManager : MonoBehaviour
         else
         {
             fightOptions.SetActive(true);
+        }
+    }
+
+    public void InfoButton(Text buttonText)
+    {
+        if (infoPanel.activeSelf)
+        {
+            buttonText.text = "?";
+            infoPanel.SetActive(false);
+        }
+        else
+        {
+            buttonText.text = "X";
+            infoPanel.SetActive(true);
         }
     }
 }
