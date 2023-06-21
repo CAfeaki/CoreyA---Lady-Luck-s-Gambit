@@ -75,9 +75,17 @@ public class Character : MonoBehaviour
             currHealth = 0;
             deadText.SetActive(true);
             turnManager.deadChar = characterNum;
+            if (characterNum == 1)
+            {
+                turnManager.char1Dead = true;
+            }
+            if (characterNum == 2)
+            {
+                turnManager.char2Dead = true;
+            }
         }
 
-        if (turnManager.turnNumber == 2 && !char2PassDone) // probably a prpblem rn
+        if (turnManager.turnNumber == 2 && !char2PassDone) 
         {
             char2PassDone = true;
             CharPassive(2, null);

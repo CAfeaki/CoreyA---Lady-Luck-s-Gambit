@@ -23,7 +23,10 @@ public class TurnManager : MonoBehaviour
     public Enemy targetToReturn;
 
     public int activePlayers;
+    public bool char1Dead;
+    public bool char2Dead;
     public GameObject restartButton;
+
 
     void Start()
     {
@@ -48,6 +51,8 @@ public class TurnManager : MonoBehaviour
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             enemyScripts.Add(enemyScript);
         }
+        char1Dead = false;
+        char2Dead = false;
         SetCharTurn();
     }
 
@@ -69,6 +74,21 @@ public class TurnManager : MonoBehaviour
                 actionButton.interactable = false;
             }
         }
+        if (char1Dead && char2Dead)
+        {
+            chargeAttackActive = false;
+            turnNumber = 0;
+            roundsHad = 0;
+            Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+            announcementText.text = "Game Over!";
+            announcementText.enabled = true;
+            restartButton.SetActive(true);
+
+            foreach (Button actionButton in allActionButtons)
+            {
+                actionButton.interactable = false;
+            }
+        }
 
         if (chargeAttackActive)
         {
@@ -82,6 +102,7 @@ public class TurnManager : MonoBehaviour
                 TurnEnd();
             }
         }
+
 
         if (turnNumber > activePlayers && enemies.Count > 0)
         {

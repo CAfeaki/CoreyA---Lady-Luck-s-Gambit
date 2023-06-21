@@ -1919,7 +1919,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Char2
+  m_Text: Moon
 --- !u!222 &451426125
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2164,11 +2164,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 48
+    m_FontSize: 47
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 48
+    m_MaxSize: 53
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -3439,14 +3439,14 @@ MonoBehaviour:
   char1CurrHealth: 15
   char1BaseAttack: 10
   char1BaseGrace: 4
-  char1BaseHealth: 15
+  char1BaseHealth: 1
   char2Attack: 4
   char2Grace: 10
   char2Health: 15
   char2CurrHealth: 15
   char2BaseAttack: 4
   char2BaseGrace: 10
-  char2BaseHealth: 15
+  char2BaseHealth: 1
 --- !u!4 &674162790
 Transform:
   m_ObjectHideFlags: 0
@@ -4327,8 +4327,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.0011978, y: 306.35907}
-  m_SizeDelta: {x: 246, y: 266.413}
+  m_AnchoredPosition: {x: 0, y: 306.35907}
+  m_SizeDelta: {x: 316.82, y: 266.413}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &839897260
 MonoBehaviour:
@@ -4357,13 +4357,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 55
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You Win!
+  m_Text: You win!
 --- !u!222 &839897261
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7088,10 +7088,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 48
+    m_FontSize: 47
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 4
     m_MaxSize: 48
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -8310,7 +8310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1779053872
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8685,6 +8685,8 @@ MonoBehaviour:
   roundToReturn: 0
   targetToReturn: {fileID: 0}
   activePlayers: 0
+  char1Dead: 0
+  char2Dead: 0
   restartButton: {fileID: 1326856693}
 --- !u!1 &1954755971
 GameObject:
@@ -8997,7 +8999,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Char1
+  m_Text: Sun
 --- !u!222 &2000701513
 CanvasRenderer:
   m_ObjectHideFlags: 0
