@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class DealerSystem : MonoBehaviour
 {
     [Header("Card Tracking")]
-    public List<int> cardsInPlay = new List<int>();
-    public List<int> cardCounter = new List<int>();
+    private List<int> cardsInPlay = new List<int>();
+    private List<int> cardCounter = new List<int>();
     public List<int> playerCards = new List<int>();
     public int chosenCard;
     public GameObject cardAssign;
@@ -16,6 +16,7 @@ public class DealerSystem : MonoBehaviour
     public int playerHandValue;
     public bool firstCardPlay;
     public Character activeCharacter;
+
     [Header("Buff Tracker")]
     public List<int> roundToEnd = new List<int>();
     public List<int> turnToEnd = new List<int>();
@@ -58,7 +59,7 @@ public class DealerSystem : MonoBehaviour
 
     public void CardPull() // "PULL" runs this
     {
-        int randomNum = Random.Range(0, cardsInPlay.Count);
+        int randomNum = Random.Range(0, cardsInPlay.Count); // randomNum is the number for the INDEX, not the card number itself!
         chosenCard = cardsInPlay[randomNum];
         cardCounter[randomNum] -= 1;
         if (cardCounter[randomNum] <= 0) // remove selected card from deck

@@ -109,6 +109,11 @@ public class CombatManager : MonoBehaviour
             FightTargetSelect(targetNumber);
         }
 
+        if (jackpotButton.activeSelf && dealerSystem.playerHandValue != 21)
+        {
+            jackpotButton.SetActive(false);
+        }
+
     }
 
     public void ActivateTargetSelect(int moveNum)
@@ -201,7 +206,7 @@ public class CombatManager : MonoBehaviour
         if (dealerSystem.playerCards.Count < 3 && turnManager.pullReset)
         {
             dealerSystem.CardPull();
-            //turnManager.pullReset = false;
+            turnManager.pullReset = false;
         }
     }
 
@@ -216,6 +221,12 @@ public class CombatManager : MonoBehaviour
         }
         jackpotButton.SetActive(false);
         dealerSystem.playerHandValue = 0;
+        foreach (Character character in uiManager.characterScripts)
+        {
+            character.attackStat = character.baseAttack;
+            character.graceStat = character.baseGrace;
+            character.healthStat = character.baseHealth;
+        }
         dealerSystem.playerCards.Clear();
         foreach (Button cardButton in uiManager.cardButtons)
         {

@@ -13,11 +13,6 @@ public class CardBuffs : MonoBehaviour
 
     public void ActivateCards(int chosenCardNum, bool beingPlayed, bool resetBuff, bool activatePassive, Character activeCharacter)
     {
-        if (activatePassive)
-        {
-
-            Debug.Log(chosenCardNum);
-        }
         switch (chosenCardNum)
         {
             case 1:
@@ -366,16 +361,23 @@ public class CardBuffs : MonoBehaviour
                 int highestStat = (Mathf.Max(Mathf.Max(activeCharacter.attackStat, activeCharacter.healthStat), activeCharacter.graceStat));
                 if (activatePassive && !resetBuff)
                 {
-                    activeCharacter.attackStat = highestStat + 20;
-                    activeCharacter.graceStat = highestStat + 20;
-                    activeCharacter.healthStat = highestStat + 20;
-                    activeCharacter.HealCharacter(highestStat + 20);
+                    foreach (Character charToBuff in dealerSystem.charScripts)
+                    {
+                        activeCharacter.attackStat = highestStat + 20;
+                        activeCharacter.graceStat = highestStat + 20;
+                        activeCharacter.healthStat = highestStat + 20;
+                        activeCharacter.HealCharacter(highestStat + 20);
+                    }
                 }
                 else if (activatePassive && resetBuff)
                 {
-                    activeCharacter.attackStat = activeCharacter.baseAttack;
-                    activeCharacter.graceStat = activeCharacter.baseGrace;
-                    activeCharacter.healthStat = activeCharacter.baseHealth;
+                    foreach (Character charToBuff in dealerSystem.charScripts)
+                    {
+                        activeCharacter.attackStat = activeCharacter.baseAttack;
+                        activeCharacter.graceStat = activeCharacter.baseGrace;
+                        activeCharacter.healthStat = activeCharacter.baseHealth;
+                    }
+
                 }
                 break;
         }
