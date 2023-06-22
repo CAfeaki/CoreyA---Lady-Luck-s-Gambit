@@ -16,11 +16,11 @@ public class SelectedInfo : MonoBehaviour
     public Text passiveText;
     public Text playText;
 
-    private DealerSystem dealerScript;
+    private DealerSystem dealerSystem;
 
     void Start()
     {
-        dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         thisCard = gameObject.GetComponent<Button>();
     }
 

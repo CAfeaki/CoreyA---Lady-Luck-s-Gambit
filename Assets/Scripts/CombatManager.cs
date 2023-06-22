@@ -12,9 +12,9 @@ public class CombatManager : MonoBehaviour
     public List<GameObject> startCards = new List<GameObject>();
     private TurnManager turnManager;
     private Character activeCharacter;
-    private DealerSystem dealerScript;
+    private DealerSystem dealerSystem;
     private UIManager uiManager;
-    private ButtonHover buttonInfo;
+    private ButtonHover buttonHover;
     public int cardNum;
 
     [Header("Fight")]
@@ -24,14 +24,13 @@ public class CombatManager : MonoBehaviour
     public int targetNumber = 0;
     public int moveButtonNum;
     public GameObject jackpotButton;
-    //public bool chargeAttackActive = false;
 
     void Start()
     {
-        dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        buttonInfo = this.GetComponent<ButtonHover>();
+        buttonHover = this.GetComponent<ButtonHover>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemies.Add(enemyObject);
@@ -47,7 +46,7 @@ public class CombatManager : MonoBehaviour
     {
         foreach (GameObject initialCard in startCards)
         {
-            cardNum = dealerScript.DealCards();
+            cardNum = dealerSystem.DealCards();
             SelectedInfo cardInfo = initialCard.GetComponent<SelectedInfo>();
             cardInfo.cardNum = cardNum;
             if (cardInfo.cardNum > 10)
@@ -69,17 +68,17 @@ public class CombatManager : MonoBehaviour
             {
                 cardInfo.cardName.text = cardNum.ToString();
             }
-            cardInfo.passiveText.text = buttonInfo.passiveTexts[cardNum - 1];
-            cardInfo.playText.text = buttonInfo.playTexts[cardNum - 1];
+            cardInfo.passiveText.text = buttonHover.passiveTexts[cardNum - 1];
+            cardInfo.playText.text = buttonHover.playTexts[cardNum - 1];
         }
-        dealerScript.chosenCard = 0;
+        dealerSystem.chosenCard = 0;
     }
 
     public void InitialCardChosen(int cardNumIndex)
     {
         SelectedInfo cardScript = startCards[cardNumIndex - 1].GetComponent<SelectedInfo>();
         cardScript.ActivateCard(cardScript.cardNum);
-        dealerScript.FirstDeal(cardScript);
+        dealerSystem.FirstDeal(cardScript);
         GameObject cardScreen = GameObject.Find("firstPickScreen");
         cardScreen.SetActive(false);
     }
@@ -142,7 +141,7 @@ public class CombatManager : MonoBehaviour
             GameObject activeArrow = activeEnemy.GetComponent<Enemy>().selectionArrow;
             activeArrow.SetActive(false);
         }
-        selectionArrow = enemies[currSelectionNum].GetComponent<Enemy>().selectionArrow; //change the arrow
+        selectionArrow = enemies[currSelectionNum].GetComponent<Enemy>().selectionArrow; 
         if (targetSelect)
         {
             selectionArrow.SetActive(true);
@@ -165,7 +164,7 @@ public class CombatManager : MonoBehaviour
     {
         selectedTarget = enemies[selectedTargetNum];
         Enemy targetScript = selectedTarget.GetComponent<Enemy>();
-        if (moveButtonNum == 1) // do the action associated with the button pressed
+        if (moveButtonNum == 1) 
         {
             activeCharacter.Move1(targetScript);
         }
@@ -199,9 +198,9 @@ public class CombatManager : MonoBehaviour
             activeCharacter.attackStat -= activeCharacter.attackCombo;
             activeCharacter.attackCombo = 0;
         }
-        if (dealerScript.playerCards.Count < 3 && turnManager.pullReset)
+        if (dealerSystem.playerCards.Count < 3 && turnManager.pullReset)
         {
-            dealerScript.CardPull(true, null);
+            dealerSystem.CardPull();
             turnManager.pullReset = false;
         }
     }
@@ -216,11 +215,17 @@ public class CombatManager : MonoBehaviour
             enemyScript.currentEnemyHealth -= char1Script.attackStat + char2Script.graceStat * 2;
         }
         jackpotButton.SetActive(false);
-        dealerScript.playerHandValue = 0;
-        dealerScript.playerCards.Clear();
+        dealerSystem.playerHandValue = 0;
+        dealerSystem.playerCards.Clear();
         foreach (Button cardButton in uiManager.cardButtons)
         {
             cardButton.interactable = false;
+        }
+
+        GameObject openFightOptions = GameObject.Find("fightOptions");
+        if (openFightOptions)
+        {
+            openFightOptions.SetActive(false);
         }
     }
 

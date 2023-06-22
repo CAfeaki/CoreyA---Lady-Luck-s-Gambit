@@ -12,7 +12,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public int cardNum;
     public int moveIndex;
     public Character activeCharacter;
-    public DealerSystem dealerScript;
+    public DealerSystem dealerSystem;
     public Button cardButton;
     public SelectedInfo cardScript;
     public GameObject cardDesc;
@@ -60,7 +60,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         cardButton = gameObject.GetComponent<Button>();
         moveIndex = this.GetComponent<SelectedInfo>().moveType;
         charNum = this.GetComponent<SelectedInfo>().characterNum;
-        dealerScript = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
     }
 
     void Update()

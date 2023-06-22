@@ -11,7 +11,7 @@ public class DealerSystem : MonoBehaviour
     public List<int> playerCards = new List<int>();
     public int chosenCard;
     public GameObject cardAssign;
-    public SelectedInfo cardScript;
+    public SelectedInfo selectedInfo;
     public int cardIndex;
     public int playerHandValue;
     public bool firstCardPlay;
@@ -46,7 +46,6 @@ public class DealerSystem : MonoBehaviour
     {
         activeCharacter = uiManager.activeCharacter;
 
-
         if (cardsInPlay.Count <= 1)
         {
             cardsInPlay.Clear();
@@ -55,7 +54,7 @@ public class DealerSystem : MonoBehaviour
         }
     }
 
-    public void CardPull(bool isPlayer, Enemy enemyScript)
+    public void CardPull()
     {
         int randomNum = Random.Range(0, cardsInPlay.Count - 1);
         chosenCard = cardsInPlay[randomNum];
@@ -65,44 +64,34 @@ public class DealerSystem : MonoBehaviour
             cardsInPlay.RemoveAt(randomNum+1);
             cardCounter.RemoveAt(randomNum+1);
         }
-        if (isPlayer)
+        playerCards.Add(chosenCard);
+        PlayerHand();
+        cardIndex = 0;
+        ActivateCards(chosenCard, false, false, true);
+        if (playerHandValue == 21)
         {
-            playerCards.Add(chosenCard);
-            PlayerHand();
-            cardIndex = 0;
-            ActivateCards(chosenCard, false, false, true);
-            if (playerHandValue == 21)
-            {
-                combatManager.jackpotButton.SetActive(true);
-            }
-            if (playerHandValue > 21)
-            {
-                Debug.Log("bust!");
-                playerCards.Clear();
-                playerHandValue = 0;
-                UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
-                foreach (Button cardButton in uiSystem.cardButtons) // reset cards in bust
-                {
-                    cardButton.interactable = false;
-                }
-                foreach (Character CS in uiManager.characterScripts)
-                {
-                    CS.attackStat = CS.baseAttack;
-                    CS.graceStat = CS.baseGrace;
-                    CS.healthStat = CS.baseHealth;
-                    if (CS.currHealth > CS.healthStat)
-                    {
-                        CS.currHealth = CS.healthStat;
-                    }
-                }
-
-            }
+            combatManager.jackpotButton.SetActive(true);
         }
-        else if (!isPlayer)
+        if (playerHandValue > 21)
         {
-            enemyScript.enemyCards.Add(chosenCard);
-            GameObject cardToActivate = uiManager.enemyCardButtons[enemyScript.enemyCards.Count];
-            cardToActivate.SetActive(true);
+            playerCards.Clear();
+            playerHandValue = 0;
+            UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
+            foreach (Button cardButton in uiSystem.cardButtons) // reset cards in bust
+            {
+                cardButton.interactable = false;
+            }
+            foreach (Character CS in uiManager.characterScripts)
+            {
+                CS.attackStat = CS.baseAttack;
+                CS.graceStat = CS.baseGrace;
+                CS.healthStat = CS.baseHealth;
+                if (CS.currHealth > CS.healthStat)
+                {
+                    CS.currHealth = CS.healthStat;
+                }
+            }
+
         }
     }
 
@@ -113,7 +102,7 @@ public class DealerSystem : MonoBehaviour
         int i = 0;
 
         cardAssign = GameObject.Find("card " + cardIndex);
-        cardScript = cardAssign.GetComponent<SelectedInfo>();
+        selectedInfo = cardAssign.GetComponent<SelectedInfo>();
         Button cardButton = cardAssign.GetComponent<Button>(); 
 
         while (i < playerCards.Count)
@@ -124,11 +113,11 @@ public class DealerSystem : MonoBehaviour
             }
             cardIndex++;
             cardAssign = GameObject.Find("card " + cardIndex);
-            cardScript = cardAssign.GetComponent<SelectedInfo>();
+            selectedInfo = cardAssign.GetComponent<SelectedInfo>();
             cardButton = cardAssign.GetComponent<Button>();
         }
 
-        cardScript.ActivateCard(chosenCard);
+        selectedInfo.ActivateCard(chosenCard);
 
         for (i = 0; i < playerCards.Count; i++)
         {
@@ -565,7 +554,7 @@ public class DealerSystem : MonoBehaviour
     {
         playerCards.Add(cardInfo.cardNum);
         PlayerHand();
-        cardScript.cardNum = cardInfo.cardNum;
+        selectedInfo.cardNum = cardInfo.cardNum;
         ActivateCards(cardInfo.cardNum, false, false, true);
     }
 

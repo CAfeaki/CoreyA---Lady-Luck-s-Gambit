@@ -7,7 +7,7 @@ public class TurnManager : MonoBehaviour
 {
     public int turnNumber;
     public int roundsHad;
-    public UIManager statInformation;
+    public UIManager uiManager;
     public CombatManager combatManager;
     public DealerSystem dealerSystem;
 
@@ -30,7 +30,7 @@ public class TurnManager : MonoBehaviour
 
     void Start()
     {
-        statInformation = GameObject.Find("UIManager").GetComponent<UIManager>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
         dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -73,6 +73,12 @@ public class TurnManager : MonoBehaviour
             {
                 actionButton.interactable = false;
             }
+
+            GameObject openFightOptions = GameObject.Find("fightOptions");
+            if (openFightOptions)
+            {
+                openFightOptions.SetActive(false);
+            }
         }
         if (char1Dead && char2Dead)
         {
@@ -87,6 +93,12 @@ public class TurnManager : MonoBehaviour
             foreach (Button actionButton in allActionButtons)
             {
                 actionButton.interactable = false;
+            }
+
+            GameObject openFightOptions = GameObject.Find("fightOptions");
+            if (openFightOptions)
+            {
+                openFightOptions.SetActive(false);
             }
         }
 
@@ -163,8 +175,8 @@ public class TurnManager : MonoBehaviour
                 actionButton.interactable = false;
             }
         }
-        statInformation.characterNum = turnNumber;
-        statInformation.characterMovesetActive = turnNumber;
+        uiManager.characterNum = turnNumber;
+        uiManager.characterMovesetActive = turnNumber;
 
     }
 

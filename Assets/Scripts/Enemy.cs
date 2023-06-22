@@ -72,13 +72,6 @@ public class Enemy : MonoBehaviour
         enemyTarget = characterScripts[targetNum];
         enemyTarget.currHealth -= attackStat;
 
-        int pullChance = Random.Range(0, 11);
-        if (pullChance == 10)
-        {
-            dealerSystem.CardPull(false, this);
-        }
-
-        //Debug.Log("Enemy move taken.");
         turnManager.TurnEnd();
     }
 
