@@ -32,7 +32,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         "+10 to <b>Health</b>.",
         "+10 to <b>Grace</b>.",
         "+10 to <b>Attack</b>.",
-        "All stats become the value of your highest stat."
+        "All stats become the value of your highest stat + 20."
     };
     public List<string> playTexts = new List<string>
     {

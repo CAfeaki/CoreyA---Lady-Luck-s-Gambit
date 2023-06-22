@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     [Header("General")]
-    private DealerSystem dealerSystem;
     public int timesTargeted;
 
     [Header("Turn Management")]
@@ -26,9 +25,6 @@ public class Enemy : MonoBehaviour
     private Character char2;
     private Character enemyTarget;
 
-    [Header("Enemy Pulling")]
-    public List<int> enemyCards = new List<int>();
-
     [Header("Spawning")]
     public GameObject selectionArrow;
 
@@ -40,7 +36,6 @@ public class Enemy : MonoBehaviour
         characterScripts.Add(char1);
         characterScripts.Add(char2);
 
-        dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
 
         EnemyStats();

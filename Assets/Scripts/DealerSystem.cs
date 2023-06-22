@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class DealerSystem : MonoBehaviour
 {
     [Header("Card Tracking")]
-    private List<int> cardsInPlay = new List<int>();
-    private List<int> cardCounter = new List<int>();
+    public List<int> cardsInPlay = new List<int>();
+    public List<int> cardCounter = new List<int>();
     public List<int> playerCards = new List<int>();
     public int chosenCard;
     public GameObject cardAssign;
@@ -21,6 +21,7 @@ public class DealerSystem : MonoBehaviour
     public List<int> turnToEnd = new List<int>();
     public List<int> cardToEnd = new List<int>();
     public List<Character> charScripts = new List<Character>();
+    private CardBuffs cardBuffs;
 
     private CombatManager combatManager;
     private UIManager uiManager;
@@ -28,25 +29,26 @@ public class DealerSystem : MonoBehaviour
 
     void Start()
     {
-        for (int i= 0; i < 13; i++)
+        for (int i= 0; i < 13; i++) // creating deck
         {
             cardsInPlay.Add(i+1);
         }
-        for (int i = 0; i < 13; i++)
-        {
+        for (int i = 0; i < 13; i++) // card counter : once a card is played 4 times, it's removed from the deck
+        { 
             cardCounter.Add(4);
         }
         playerHandValue = 0;
         combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        cardBuffs = GameObject.Find("DealerSystem").GetComponent<CardBuffs>();
     }
 
     void Update()
     {
-        activeCharacter = uiManager.activeCharacter;
+        activeCharacter = uiManager.activeCharacter; // assign all changes to the active character
 
-        if (cardsInPlay.Count <= 1)
+        if (cardsInPlay.Count <= 1) // reset deck once all cards have been played
         {
             cardsInPlay.Clear();
             cardCounter.Clear();
@@ -54,30 +56,30 @@ public class DealerSystem : MonoBehaviour
         }
     }
 
-    public void CardPull()
+    public void CardPull() // "PULL" runs this
     {
-        int randomNum = Random.Range(0, cardsInPlay.Count - 1);
+        int randomNum = Random.Range(0, cardsInPlay.Count);
         chosenCard = cardsInPlay[randomNum];
         cardCounter[randomNum] -= 1;
-        if (cardCounter[randomNum] == 0)
+        if (cardCounter[randomNum] <= 0) // remove selected card from deck
         {
-            cardsInPlay.RemoveAt(randomNum+1);
-            cardCounter.RemoveAt(randomNum+1);
+            cardsInPlay.RemoveAt(randomNum);
+            cardCounter.RemoveAt(randomNum);
         }
-        playerCards.Add(chosenCard);
-        PlayerHand();
+        playerCards.Add(chosenCard); // give player their card
+        PlayerHand(); 
         cardIndex = 0;
-        ActivateCards(chosenCard, false, false, true);
+        cardBuffs.ActivateCards(chosenCard, false, false, true, activeCharacter);
         if (playerHandValue == 21)
         {
             combatManager.jackpotButton.SetActive(true);
         }
-        if (playerHandValue > 21)
+        if (playerHandValue > 21) // reset cards in bust
         {
             playerCards.Clear();
             playerHandValue = 0;
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
-            foreach (Button cardButton in uiSystem.cardButtons) // reset cards in bust
+            foreach (Button cardButton in uiSystem.cardButtons) 
             {
                 cardButton.interactable = false;
             }
@@ -95,7 +97,7 @@ public class DealerSystem : MonoBehaviour
         }
     }
 
-    public void PlayerHand()
+    public void PlayerHand() // organising the player's hand in the UI
     {
         int newHandValue = 0;
         int cardIndex = 1;
@@ -105,7 +107,7 @@ public class DealerSystem : MonoBehaviour
         selectedInfo = cardAssign.GetComponent<SelectedInfo>();
         Button cardButton = cardAssign.GetComponent<Button>(); 
 
-        while (i < playerCards.Count)
+        while (i < playerCards.Count) // sort cards so that the player hand list doesnt break
         {
             if (!cardButton.interactable)
             {
@@ -127,19 +129,18 @@ public class DealerSystem : MonoBehaviour
         playerHandValue = newHandValue;
     }
 
-
-    void ActiveCounter(int cardNum, bool addToCounter, bool resetFromCounter)
+    public void ActiveCounter(int cardNum, bool addToCounter, bool resetFromCounter) // tracking how long buffs last
     {
         if (addToCounter)
         {
             int roundsActive;
             if (cardNum >= 10)
             {
-                roundsActive = 0;
+                roundsActive = 0; // jack - king only last one round
             }
             else
             {
-                roundsActive = 1;
+                roundsActive = 1; // other cards last 2
             }
             roundToEnd.Add(turnManager.roundsHad + roundsActive);
             turnToEnd.Add(activeCharacter.characterNum);
@@ -154,408 +155,42 @@ public class DealerSystem : MonoBehaviour
         }
     }
 
-    public void ActivateCards(int chosenCardNum, bool beingPlayed, bool resetBuff, bool activatePassive)
-    {
-        switch (chosenCardNum) 
-        {
-            case 1:
-                if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 3;
-                    activeCharacter.graceStat += 3;
-                    activeCharacter.healthStat += 3;
-                    activeCharacter.HealCharacter(3);
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 3;
-                    activeCharacter.graceStat -= 3;
-                    activeCharacter.healthStat -= 3;
-                    ActiveCounter(0, false, true);
-                }
-
-                break;
-            case 2:
-                if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 4;
-                    activeCharacter.graceStat += 4;
-                    activeCharacter.healthStat += 4;
-                    activeCharacter.HealCharacter(4);
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 4;
-                    activeCharacter.graceStat -= 4;
-                    activeCharacter.healthStat -= 4;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 3:
-                if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 5;
-                    activeCharacter.graceStat += 5;
-                    activeCharacter.healthStat += 5;
-                    activeCharacter.HealCharacter(5);
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 5;
-                    activeCharacter.graceStat -= 5;
-                    activeCharacter.healthStat -= 5;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 4:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat += 2;
-                        charToBuff.healthStat += 2;
-                        charToBuff.HealCharacter(2);
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat -= 2;
-                        charToBuff.healthStat -= 2;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 4;
-                    activeCharacter.healthStat += 4;
-                    activeCharacter.HealCharacter(4);
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 4;
-                    activeCharacter.healthStat -= 4;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 5:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.graceStat += 2;
-                        charToBuff.healthStat += 2;
-                        charToBuff.HealCharacter(2);
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.graceStat -= 2;
-                        charToBuff.healthStat -= 2;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.graceStat += 4;
-                    activeCharacter.healthStat += 4;
-                    activeCharacter.HealCharacter(4);
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.graceStat -= 4;
-                    activeCharacter.healthStat -= 4;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 6:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat += 2;
-                        charToBuff.graceStat += 2;
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat -= 2;
-                        charToBuff.graceStat -= 2;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 4;
-                    activeCharacter.graceStat += 4;
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 4;
-                    activeCharacter.graceStat -= 4;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 7:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat += 3;
-                        charToBuff.graceStat += 3;
-                        charToBuff.healthStat += 3;
-                        charToBuff.HealCharacter(3);
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat -= 3;
-                        charToBuff.graceStat -= 3;
-                        charToBuff.healthStat -= 3;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 7;
-                    activeCharacter.healthStat += 7;
-                    activeCharacter.HealCharacter(7);
-                    activeCharacter.graceStat += 3;
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 7;
-                    activeCharacter.healthStat -= 7;
-                    activeCharacter.graceStat -= 3;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 8:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat += 4;
-                        charToBuff.graceStat += 4;
-                        charToBuff.healthStat += 4;
-                        charToBuff.HealCharacter(4);
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat -= 4;
-                        charToBuff.graceStat -= 4;
-                        charToBuff.healthStat -= 4;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 4;
-                    activeCharacter.healthStat += 8;
-                    activeCharacter.HealCharacter(8);
-                    activeCharacter.graceStat += 8;
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 4;
-                    activeCharacter.healthStat -= 8;
-                    activeCharacter.graceStat -= 8;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 9:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat += 5;
-                        charToBuff.graceStat += 5;
-                        charToBuff.healthStat += 5;
-                        charToBuff.HealCharacter(5);
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat -= 5;
-                        charToBuff.graceStat -= 5;
-                        charToBuff.healthStat -= 5;
-                    }
-                }
-                else if (beingPlayed && !resetBuff)
-                {
-                    activeCharacter.attackStat += 9;
-                    activeCharacter.healthStat += 5;
-                    activeCharacter.HealCharacter(5);
-                    activeCharacter.graceStat += 9;
-                    ActiveCounter(chosenCardNum, true, false);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 9;
-                    activeCharacter.healthStat -= 5;
-                    activeCharacter.graceStat -= 9;
-                    ActiveCounter(0, false, true);
-                }
-                break;
-            case 10:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.healthStat += 10;
-                        charToBuff.HealCharacter(10);
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.healthStat -= 10;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 10;
-                    activeCharacter.graceStat += 10;
-                    activeCharacter.healthStat += 10;
-                    activeCharacter.HealCharacter(10);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 10;
-                    activeCharacter.graceStat -= 10;
-                    activeCharacter.healthStat -= 10;
-                }
-                break;
-            case 11:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.graceStat += 10;
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.graceStat -= 10;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 10;
-                    activeCharacter.graceStat += 10;
-                    activeCharacter.healthStat += 10;
-                    activeCharacter.HealCharacter(10);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 10;
-                    activeCharacter.graceStat -= 10;
-                    activeCharacter.healthStat -= 10;
-                }
-                break;
-            case 12:
-                if (activatePassive && !resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat += 10;
-                    }
-                }
-                else if (activatePassive && resetBuff)
-                {
-                    foreach (Character charToBuff in charScripts)
-                    {
-                        charToBuff.attackStat -= 10;
-                    }
-                }
-                else if (beingPlayed)
-                {
-                    activeCharacter.attackStat += 10;
-                    activeCharacter.graceStat += 10;
-                    activeCharacter.healthStat += 10;
-                    activeCharacter.HealCharacter(10);
-                }
-                else if (resetBuff)
-                {
-                    activeCharacter.attackStat -= 10;
-                    activeCharacter.graceStat -= 10;
-                    activeCharacter.healthStat -= 10;
-                }
-                break;
-            case 13:
-                int highestStat = (Mathf.Max(Mathf.Max(activeCharacter.attackStat, activeCharacter.healthStat), activeCharacter.graceStat));
-                if (activatePassive && !resetBuff)
-                {
-                    activeCharacter.attackStat = highestStat;
-                    activeCharacter.graceStat = highestStat;
-                    activeCharacter.healthStat = highestStat;
-                    activeCharacter.HealCharacter(highestStat);
-                }
-                else if (activatePassive && resetBuff) 
-                {
-                    activeCharacter.attackStat = activeCharacter.baseAttack;
-                    activeCharacter.graceStat = activeCharacter.baseGrace;
-                    activeCharacter.healthStat = activeCharacter.baseHealth;
-                }
-                break;
-        }
-    }
-
-    public void PlayCard(SelectedInfo cardData)
+    public void PlayCard(SelectedInfo cardData) // called when card is pressed. buffs stored in CardBuffs.cs
     {
         if (firstCardPlay)
         {
-            //firstCardPlay = false;
-            if (cardData.cardNum > 3)
+            if (cardData.cardNum > 3) // reset passive
             {
-                ActivateCards(cardData.cardNum, false, true, true);
+                cardBuffs.ActivateCards(cardData.cardNum, false, true, true, activeCharacter);
             }
-            ActivateCards(cardData.cardNum, true, false, false);
+            cardBuffs.ActivateCards(cardData.cardNum, true, false, false, activeCharacter); // activate play effect
             playerHandValue -= cardData.cardNum;
             int cardIndex = playerCards.IndexOf(cardData.cardNum);
             playerCards.RemoveAt(cardIndex);
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();
-            uiSystem.cardButtons[cardData.cardType - 1].interactable = false;
+            uiSystem.cardButtons[cardData.cardType - 1].interactable = false; // disable card slot
         }
     }
 
-    public int DealCards()
+    public int DealCards() // for initial card shuffle
     {
-        int randomNum = Random.Range(0, cardsInPlay.Count - 1);
+        int randomNum = Random.Range(0, cardsInPlay.Count);
         chosenCard = cardsInPlay[randomNum];
         cardCounter[randomNum] -= 1;
         if (cardCounter[randomNum] == 0)
         {
-            cardsInPlay.RemoveAt(randomNum + 1);
-            cardCounter.RemoveAt(randomNum + 1);
+            cardsInPlay.RemoveAt(randomNum);
+            cardCounter.RemoveAt(randomNum);
         }
         return chosenCard;
     }
 
-    public void FirstDeal(SelectedInfo cardInfo)
+    public void FirstDeal(SelectedInfo cardInfo) // to add the first card to the player's hand
     {
         playerCards.Add(cardInfo.cardNum);
         PlayerHand();
         selectedInfo.cardNum = cardInfo.cardNum;
-        ActivateCards(cardInfo.cardNum, false, false, true);
+        cardBuffs.ActivateCards(cardInfo.cardNum, false, false, true, activeCharacter);
     }
 
 

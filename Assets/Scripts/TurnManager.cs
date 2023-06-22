@@ -27,12 +27,15 @@ public class TurnManager : MonoBehaviour
     public bool char2Dead;
     public GameObject restartButton;
 
+    private CardBuffs cardBuffs;
+
 
     void Start()
     {
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         combatManager = GameObject.Find("CombatManager").GetComponent<CombatManager>();
         dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        cardBuffs = GameObject.Find("DealerSystem").GetComponent<CardBuffs>();
         foreach (GameObject enemyObject in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             enemies.Add(enemyObject);
@@ -139,7 +142,7 @@ public class TurnManager : MonoBehaviour
         {
             if (dealerSystem.roundToEnd[0] == roundsHad && dealerSystem.turnToEnd[0] == dealerSystem.activeCharacter.characterNum)
             {
-                dealerSystem.ActivateCards(dealerSystem.cardToEnd[0], false, true, false);
+                cardBuffs.ActivateCards(dealerSystem.cardToEnd[0], false, true, false, dealerSystem.activeCharacter);
             }
         }
 

@@ -201,7 +201,7 @@ public class CombatManager : MonoBehaviour
         if (dealerSystem.playerCards.Count < 3 && turnManager.pullReset)
         {
             dealerSystem.CardPull();
-            turnManager.pullReset = false;
+            //turnManager.pullReset = false;
         }
     }
 

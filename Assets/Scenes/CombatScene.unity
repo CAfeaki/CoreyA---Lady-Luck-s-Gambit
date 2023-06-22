@@ -1387,69 +1387,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &304745641
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 304745642}
-  - component: {fileID: 304745643}
-  m_Layer: 5
-  m_Name: DealerSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &304745642
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304745641}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1494039267}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &304745643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304745641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e57aa7d667f28db4399d7c4ff72f955a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCards: 
-  chosenCard: 0
-  cardAssign: {fileID: 0}
-  selectedInfo: {fileID: 0}
-  cardIndex: 0
-  playerHandValue: 0
-  firstCardPlay: 0
-  activeCharacter: {fileID: 0}
-  roundToEnd: 
-  turnToEnd: 
-  cardToEnd: 
-  charScripts:
-  - {fileID: 708002363}
-  - {fileID: 132009615}
 --- !u!1 &325460976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,7 +2429,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 304745643}
+      - m_Target: {fileID: 628427641}
         m_TargetAssemblyTypeName: DealerSystem, Assembly-CSharp
         m_MethodName: PlayCard
         m_Mode: 2
@@ -3173,6 +3110,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &628427638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 628427639}
+  - component: {fileID: 628427641}
+  - component: {fileID: 628427640}
+  m_Layer: 5
+  m_Name: DealerSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &628427639
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628427638}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1494039267}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &628427640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628427638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e00d2032050ae24689a9e38cb917d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &628427641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628427638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e57aa7d667f28db4399d7c4ff72f955a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCards: 
+  chosenCard: 0
+  cardAssign: {fileID: 0}
+  selectedInfo: {fileID: 0}
+  cardIndex: 0
+  playerHandValue: 0
+  firstCardPlay: 0
+  activeCharacter: {fileID: 0}
+  roundToEnd: 
+  turnToEnd: 
+  cardToEnd: 
+  charScripts: []
 --- !u!1 &653921024
 GameObject:
   m_ObjectHideFlags: 0
@@ -6013,7 +6024,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 304745643}
+      - m_Target: {fileID: 628427641}
         m_TargetAssemblyTypeName: DealerSystem, Assembly-CSharp
         m_MethodName: PlayCard
         m_Mode: 2
@@ -6339,7 +6350,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 304745643}
+      - m_Target: {fileID: 628427641}
         m_TargetAssemblyTypeName: DealerSystem, Assembly-CSharp
         m_MethodName: PlayCard
         m_Mode: 2
@@ -7384,7 +7395,7 @@ RectTransform:
   - {fileID: 1926512526}
   - {fileID: 2041123197}
   - {fileID: 731975325}
-  - {fileID: 304745642}
+  - {fileID: 628427639}
   - {fileID: 1868085329}
   - {fileID: 114152553}
   m_Father: {fileID: 277652080}
