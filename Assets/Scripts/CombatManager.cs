@@ -240,10 +240,29 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void Restart()
+    public void DisplayBust()
     {
-        SceneManager.LoadScene("CombatScene");
+        Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+        announcementText.text = "Bust!";
+        announcementText.enabled = true;
+        StartCoroutine(DelayHide(announcementText));
     }
 
+    public IEnumerator DelayHide(Text textToHide)
+    {
+        yield return new WaitForSeconds(3);
+        textToHide.enabled = false;
+    }
 
+    public void Restart()
+    {
+        if (turnManager.char1Dead && turnManager.char2Dead)
+        {
+            Character char1Script = GameObject.Find("Char1").GetComponent<Character>();
+            Character char2Script = GameObject.Find("Char2").GetComponent<Character>();
+            char1Script.currHealth = char1Script.baseHealth;
+            char2Script.currHealth = char2Script.baseHealth;
+        }
+        SceneManager.LoadScene("CombatScene");
+    }
 }

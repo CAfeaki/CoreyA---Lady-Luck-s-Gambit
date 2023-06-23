@@ -64,6 +64,14 @@ public class Enemy : MonoBehaviour
     public void EnemyMove()
     {
         int targetNum = Random.Range(0, 2);
+        if (targetNum == 0 && turnManager.char1Dead)
+        {
+            targetNum = 1;
+        }
+        if (targetNum == 1 && turnManager.char2Dead)
+        {
+            targetNum = 0;
+        }
         enemyTarget = characterScripts[targetNum];
         enemyTarget.currHealth -= attackStat;
 

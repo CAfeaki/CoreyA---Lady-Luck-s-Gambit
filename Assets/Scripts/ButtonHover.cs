@@ -160,7 +160,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     if (activeCharacter.characterNum == 2)
                     {
                         descriptionBox.SetActive(true);
-                        descText.text = "Deals your <b>Attack</b> to enemy target and restores the amount of damage done to your <b>Health</b>.";
+                        descText.text = "Deals half your <b>Attack</b> to enemy target and restores the amount of damage done to your <b>Health</b>.";
                     }
                     break;
 
@@ -180,7 +180,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             else if (charNum == 2)
             {
                 descriptionBox.SetActive(true);
-                descText.text = "<b>Rises the Moon</b>\n<size=36>At the start of each turn, Moon regains +1 to their <b>Health</b>, regardless of whether they’re conscious or not.</size>";
+                descText.text = "<b>Longing for Dawn</b>\n<size=36>At the start of each turn, Moon regains +1 to their <b>Health</b> as long as Sun is standing.</size>";
             }
         }
     }

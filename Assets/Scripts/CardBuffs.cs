@@ -358,24 +358,24 @@ public class CardBuffs : MonoBehaviour
                 }
                 break;
             case 13:
-                int highestStat = (Mathf.Max(Mathf.Max(activeCharacter.attackStat, activeCharacter.healthStat), activeCharacter.graceStat));
                 if (activatePassive && !resetBuff)
                 {
                     foreach (Character charToBuff in dealerSystem.charScripts)
                     {
-                        activeCharacter.attackStat = highestStat + 20;
-                        activeCharacter.graceStat = highestStat + 20;
-                        activeCharacter.healthStat = highestStat + 20;
-                        activeCharacter.HealCharacter(highestStat + 20);
+                        int highestStat = (Mathf.Max(Mathf.Max(charToBuff.attackStat, charToBuff.healthStat), charToBuff.graceStat));
+                        charToBuff.attackStat = highestStat + 20;
+                        charToBuff.graceStat = highestStat + 20;
+                        charToBuff.healthStat = highestStat + 20;
+                        charToBuff.HealCharacter(highestStat + 20);
                     }
                 }
                 else if (activatePassive && resetBuff)
                 {
                     foreach (Character charToBuff in dealerSystem.charScripts)
                     {
-                        activeCharacter.attackStat = activeCharacter.baseAttack;
-                        activeCharacter.graceStat = activeCharacter.baseGrace;
-                        activeCharacter.healthStat = activeCharacter.baseHealth;
+                        charToBuff.attackStat = charToBuff.baseAttack;
+                        charToBuff.graceStat = charToBuff.baseGrace;
+                        charToBuff.healthStat = charToBuff.baseHealth;
                     }
 
                 }

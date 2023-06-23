@@ -77,6 +77,7 @@ public class DealerSystem : MonoBehaviour
         }
         if (playerHandValue > 21) // reset cards in bust
         {
+            combatManager.DisplayBust();
             playerCards.Clear();
             playerHandValue = 0;
             UIManager uiSystem = GameObject.Find("UIManager").GetComponent<UIManager>();

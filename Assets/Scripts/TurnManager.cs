@@ -69,6 +69,7 @@ public class TurnManager : MonoBehaviour
             turnNumber = 0;
             roundsHad = 0;
             Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+            announcementText.text = "You win!";
             announcementText.enabled = true;
             restartButton.SetActive(true);
 
@@ -168,6 +169,11 @@ public class TurnManager : MonoBehaviour
                 Character characterScript = characters[0].GetComponent<Character>();
                 chargeAttackActive = false;
                 characterScript.Char1Move2(targetToReturn);
+
+                Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+                announcementText.text = "Charge attack unleashed!";
+                announcementText.enabled = true;
+                StartCoroutine(combatManager.DelayHide(announcementText));
             }
         }
 
@@ -177,6 +183,11 @@ public class TurnManager : MonoBehaviour
             {
                 actionButton.interactable = false;
             }
+
+            Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+            announcementText.text = "Enemy turn finished.";
+            announcementText.enabled = true;
+            StartCoroutine(combatManager.DelayHide(announcementText));
         }
         uiManager.characterNum = turnNumber;
         uiManager.characterMovesetActive = turnNumber;

@@ -85,6 +85,15 @@ public class Character : MonoBehaviour
             }
         }
 
+        if (currHealth > 0 && turnManager.char1Dead && characterNum == 1)
+        {
+            turnManager.char1Dead = false;
+        }
+        if (currHealth > 0 && turnManager.char2Dead && characterNum == 2)
+        {
+            turnManager.char2Dead = false;
+        }
+
         if (turnManager.turnNumber == 2 && !char2PassDone) 
         {
             char2PassDone = true;
@@ -114,13 +123,9 @@ public class Character : MonoBehaviour
         }
         if (activePass == 2)
         {
-            if (currHealth < healthStat)
+            if (!turnManager.char1Dead)
             {
-                currHealth += 1;
-                if (currHealth >= healthStat)
-                {
-                    currHealth = healthStat;
-                }
+                HealCharacter(1);
             }
         }
     }
@@ -183,8 +188,8 @@ public class Character : MonoBehaviour
         }
         if (characterNum == 2)
         {
-            enemyScript.currentEnemyHealth -= attackStat;
-            HealCharacter(attackStat);
+            enemyScript.currentEnemyHealth -= attackStat / 2;
+            HealCharacter(attackStat / 2);
         }
     }
 
