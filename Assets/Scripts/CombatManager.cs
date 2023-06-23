@@ -35,14 +35,10 @@ public class CombatManager : MonoBehaviour
         {
             enemies.Add(enemyObject);
         }
-        foreach (GameObject initialCard in GameObject.FindGameObjectsWithTag("Initial Card"))
-        {
-            startCards.Add(initialCard);
-        }
         InitialCard();
     }
 
-    void InitialCard()
+    void InitialCard() // first screen the player sees, letting them choose their first card
     {
         foreach (GameObject initialCard in startCards)
         {
@@ -74,7 +70,7 @@ public class CombatManager : MonoBehaviour
         dealerSystem.chosenCard = 0;
     }
 
-    public void InitialCardChosen(int cardNumIndex)
+    public void InitialCardChosen(int cardNumIndex) // add first card to hand
     {
         SelectedInfo cardScript = startCards[cardNumIndex - 1].GetComponent<SelectedInfo>();
         cardScript.ActivateCard(cardScript.cardNum);
@@ -85,12 +81,12 @@ public class CombatManager : MonoBehaviour
 
     void Update()
     {
-        if (turnManager.turnNumber <= 2 && turnManager.turnNumber != 0)
+        if (turnManager.turnNumber <= 2 && turnManager.turnNumber != 0) // get the active character's script
         {
             activeCharacter = GameObject.Find("UIManager").GetComponent<UIManager>().characterScripts[turnManager.turnNumber - 1];
         }
 
-        if (targetSelect)
+        if (targetSelect) // activating the target select arrow
         {
             FightTargetSelect(targetNumber);
             if (targetNumber < enemies.Count - 1 && Input.GetKeyDown(KeyCode.RightArrow))
@@ -116,10 +112,10 @@ public class CombatManager : MonoBehaviour
 
     }
 
-    public void ActivateTargetSelect(int moveNum)
+    public void ActivateTargetSelect(int moveNum) // called after a move is picked to trigger target select
     {
         moveButtonNum = moveNum;
-        if (moveNum == 2 && activeCharacter.characterNum == 2)
+        if (moveNum == 2 && activeCharacter.characterNum == 2) // moves that don't require target select, move right to the action
         {
             FightAction();
         }
@@ -133,7 +129,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void FightTargetSelect(int currSelectionNum)
+    public void FightTargetSelect(int currSelectionNum) // activating the arrow and selecting the target
     {
         if (enemies.Count == 0)
         {
@@ -156,7 +152,7 @@ public class CombatManager : MonoBehaviour
             selectionArrow.SetActive(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)) // target selected
         {
             targetSelect = false;
             selectionArrow.SetActive(false);
@@ -165,7 +161,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void FightAction()
+    public void FightAction() // activates the moves/damage
     {
         selectedTarget = enemies[selectedTargetNum];
         Enemy targetScript = selectedTarget.GetComponent<Enemy>();
@@ -185,7 +181,7 @@ public class CombatManager : MonoBehaviour
         turnManager.TurnEnd();
     }
 
-    public void HealAction()
+    public void HealAction() // restores health to player
     {
         if (activeCharacter.characterNum == 1)
         {
@@ -196,7 +192,7 @@ public class CombatManager : MonoBehaviour
         turnManager.TurnEnd();
     }
 
-    public void PullAction()
+    public void PullAction() // activates pulling from the deck
     {
         if (activeCharacter.characterNum == 1)
         {
@@ -210,9 +206,9 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void TheJackpot()
+    public void TheJackpot() // all out finisher once the player hits 21
     {
-        foreach (GameObject enemyObject in enemies)
+        foreach (GameObject enemyObject in enemies) // attacking all enemies
         {
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
             Character char1Script = GameObject.Find("Char1").GetComponent<Character>();
@@ -240,7 +236,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void DisplayBust()
+    public void DisplayBust() // announcement text for busting
     {
         Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
         announcementText.text = "Bust!";
@@ -248,15 +244,15 @@ public class CombatManager : MonoBehaviour
         StartCoroutine(DelayHide(announcementText));
     }
 
-    public IEnumerator DelayHide(Text textToHide)
+    public IEnumerator DelayHide(Text textToHide) // delay timer
     {
         yield return new WaitForSeconds(3);
         textToHide.enabled = false;
     }
 
-    public void Restart()
+    public void Restart() // reloads the scene after a game is decided
     {
-        if (turnManager.char1Dead && turnManager.char2Dead)
+        if (turnManager.char1Dead && turnManager.char2Dead) // resets health if there was a TPK
         {
             Character char1Script = GameObject.Find("Char1").GetComponent<Character>();
             Character char2Script = GameObject.Find("Char2").GetComponent<Character>();

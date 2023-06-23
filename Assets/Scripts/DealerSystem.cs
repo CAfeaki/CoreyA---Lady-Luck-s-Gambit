@@ -153,7 +153,11 @@ public class DealerSystem : MonoBehaviour
             roundToEnd.RemoveAt(0);
             turnToEnd.RemoveAt(0);
             cardToEnd.RemoveAt(0);
-            Debug.Log("Effects wore off!");
+
+            Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
+            announcementText.text = "Effects wore off!";
+            announcementText.enabled = true;
+            StartCoroutine(combatManager.DelayHide(announcementText));
         }
     }
 

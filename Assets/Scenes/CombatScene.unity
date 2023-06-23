@@ -8934,7 +8934,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies: []
   selectedTargetNum: 0
-  startCards: []
+  startCards:
+  - {fileID: 549580873}
+  - {fileID: 325460976}
+  - {fileID: 1074261271}
   cardNum: 0
   targetSelect: 0
   targetNumber: 0

@@ -125,6 +125,10 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
         else if (moveIndex != 0)
         {
+            if (cardDesc.activeSelf)
+            {
+                cardDesc.SetActive(false);
+            }
             switch (moveIndex)
             {
                 case 1:
