@@ -73,11 +73,9 @@ public class Enemy : MonoBehaviour
         {
             targetNum = 0;
         }
-        targetNum = 1; // REMOVE THIS
         enemyTarget = characterScripts[targetNum];
         enemyTarget.currHealth -= attackStat;
         UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        //uiManager.SoundDamage(enemyTarget);
         turnManager.DelaySound(enemyNumber - 2);
         turnManager.TurnEnd();
     }

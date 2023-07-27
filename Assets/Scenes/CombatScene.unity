@@ -3504,10 +3504,10 @@ MonoBehaviour:
   char2PassDone: 0
   attackCombo: 0
   charVO:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: cd88a337872ed1a40a27891afdd8c853, type: 3}
+  - {fileID: 8300000, guid: 38d0cc6f7ed21924498e87a92d049051, type: 3}
+  - {fileID: 8300000, guid: 2866bf1095ccaaf41ba7f7c7aa358903, type: 3}
+  - {fileID: 8300000, guid: 73802cc6c1f156b44954af20c2ffd65a, type: 3}
   baseAttack: 0
   baseGrace: 0
   baseHealth: 0

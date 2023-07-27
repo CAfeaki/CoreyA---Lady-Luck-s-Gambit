@@ -23,11 +23,13 @@ public class Character : MonoBehaviour
     public int baseHealth;
 
     private GameManager gameManager;
+    private UIManager uiManager;
 
 
     void Start()
     {
         turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (characterNum == 1)
         {
@@ -137,11 +139,13 @@ public class Character : MonoBehaviour
         {
             attackCombo++;
             enemyScript.currentEnemyHealth -= attackStat;
+            StartCoroutine(DelayVoice(enemyScript));
             CharPassive(1, enemyScript);
         }
         if (characterNum == 2)
         {
             enemyScript.currentEnemyHealth -= attackStat;
+            StartCoroutine(DelayVoice(enemyScript));
         }
     }
 
@@ -171,6 +175,7 @@ public class Character : MonoBehaviour
     {
         CharPassive(1, enemyScript);
         enemyScript.currentEnemyHealth -= attackStat * 2 + graceStat;
+        StartCoroutine(DelayVoice(enemyScript));
         attackCombo++;
         turnManager.chargeAttackActive = false;
         turnManager.TurnEnd();
@@ -184,12 +189,14 @@ public class Character : MonoBehaviour
             foreach (Enemy targetScript in turnManager.enemyScripts)
             {
                 targetScript.currentEnemyHealth -= attackStat / 2;
+                StartCoroutine(DelayVoice(enemyScript));
             }
             attackCombo++;
         }
         if (characterNum == 2)
         {
             enemyScript.currentEnemyHealth -= attackStat / 2;
+            StartCoroutine(DelayVoice(enemyScript));
             HealCharacter(attackStat / 2);
         }
     }
@@ -210,5 +217,16 @@ public class Character : MonoBehaviour
                 currHealth = healthStat;
             }
         }
+    }
+
+    private IEnumerator DelayVoice(Enemy enemy) // delay timer  
+    {
+        int randomNum = Random.Range(0, 2);
+        uiManager.audioSource.clip = charVO[randomNum];
+        uiManager.audioSource.Play();
+        yield return new WaitForSeconds(0.7f);
+        randomNum = Random.Range(2, 4);
+        uiManager.audioSource.clip = enemy.enemyVO[randomNum];
+        uiManager.audioSource.Play();
     }
 }

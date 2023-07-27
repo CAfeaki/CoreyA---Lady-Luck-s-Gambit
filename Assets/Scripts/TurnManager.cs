@@ -233,7 +233,7 @@ public class TurnManager : MonoBehaviour
             int randomNum = Random.Range(0, 2);
             uiManager.audioSource.clip = enemyScripts[enemyNum].enemyVO[randomNum];
             uiManager.audioSource.Play();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             randomNum = Random.Range(2, 4);
             uiManager.audioSource.clip = enemyScripts[enemyNum].enemyTarget.charVO[randomNum];
             uiManager.audioSource.Play();

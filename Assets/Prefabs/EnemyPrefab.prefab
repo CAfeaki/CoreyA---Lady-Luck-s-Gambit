@@ -107,10 +107,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timesTargeted: 0
   enemyVO:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: dea6c924814b1564db0d0b8aa5bf5b46, type: 3}
+  - {fileID: 8300000, guid: 60970bdd6cb1d7e408af432369002e37, type: 3}
+  - {fileID: 8300000, guid: 27204f79317cf9149a8dcb124593793e, type: 3}
+  - {fileID: 8300000, guid: 68bda251109a0dd45a1c57cb51c3a571, type: 3}
   enemyNumber: 1
   attackStat: 0
   graceStat: 0
