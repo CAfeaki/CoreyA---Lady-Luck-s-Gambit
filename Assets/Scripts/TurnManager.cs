@@ -184,6 +184,9 @@ public class TurnManager : MonoBehaviour
                 actionButton.interactable = false;
             }
 
+            StartCoroutine(DelaySound(turnNumber - 2));
+
+
             Text announcementText = GameObject.Find("announceText").GetComponent<Text>();
             announcementText.text = "Enemy turn finished.";
             announcementText.enabled = true;
@@ -218,6 +221,22 @@ public class TurnManager : MonoBehaviour
         {
             combatManager.moveButtonNum = 2;
             combatManager.FightAction();
+        }
+    }
+
+    public IEnumerator DelaySound(int enemyNum) // delay timer               ALL THE PROBLEMS ARE HERE
+    {
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            int randomNum = Random.Range(0, 2);
+            uiManager.audioSource.clip = enemyScripts[enemyNum].enemyVO[randomNum];
+            uiManager.audioSource.Play();
+            yield return new WaitForSeconds(0.2f);
+            randomNum = Random.Range(2, 4);
+            uiManager.audioSource.clip = enemyScripts[enemyNum].enemyTarget.charVO[randomNum];
+            uiManager.audioSource.Play();
         }
     }
 }

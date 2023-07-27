@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("General")]
     public int timesTargeted;
+    public List<AudioClip> enemyVO = new List<AudioClip>();
 
     [Header("Turn Management")]
     public int enemyNumber;
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour
     private List<Character> characterScripts = new List<Character>();
     private Character char1;
     private Character char2;
-    private Character enemyTarget;
+    public Character enemyTarget;
 
     [Header("Spawning")]
     public GameObject selectionArrow;
@@ -72,9 +73,12 @@ public class Enemy : MonoBehaviour
         {
             targetNum = 0;
         }
+        targetNum = 1; // REMOVE THIS
         enemyTarget = characterScripts[targetNum];
         enemyTarget.currHealth -= attackStat;
-
+        UIManager uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        //uiManager.SoundDamage(enemyTarget);
+        turnManager.DelaySound(enemyNumber - 2);
         turnManager.TurnEnd();
     }
 

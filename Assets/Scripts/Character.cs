@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     public GameObject deadText;
     public bool char2PassDone = false;
     public int attackCombo = 0;
+    public List<AudioClip> charVO = new List<AudioClip>();
 
     public int baseAttack;
     public int baseGrace;

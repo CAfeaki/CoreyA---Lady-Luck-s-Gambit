@@ -106,13 +106,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timesTargeted: 0
+  enemyVO:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   enemyNumber: 1
   attackStat: 0
   graceStat: 0
   healthStat: 0
   currentEnemyHealth: 0
   healthBar: {fileID: 2842633292901518331}
-  enemyCards: 
+  enemyTarget: {fileID: 0}
   selectionArrow: {fileID: 8173945936450802304}
 --- !u!1 &2842633292717931848
 GameObject:

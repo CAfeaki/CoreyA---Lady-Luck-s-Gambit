@@ -157,6 +157,7 @@ public class CombatManager : MonoBehaviour
             targetSelect = false;
             selectionArrow.SetActive(false);
             selectedTargetNum = currSelectionNum;
+            uiManager.SoundAttack(); // play sfx
             FightAction();
         }
     }

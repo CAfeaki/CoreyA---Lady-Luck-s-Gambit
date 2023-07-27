@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public Text turnCounter;
 
     public TurnManager turnManager;
+    public AudioSource audioSource;
 
     [Header("Characer Stats")]
     public int characterNum;
@@ -133,5 +134,19 @@ public class UIManager : MonoBehaviour
             buttonText.text = "X";
             infoPanel.SetActive(true);
         }
+    }
+
+    public void SoundAttack()
+    {
+        int randomNum = Random.Range(0, 2);
+        audioSource.clip = activeCharacter.charVO[randomNum];
+        audioSource.Play();
+    }
+
+    public void SoundDamage(Character targetChar)
+    {
+        int randomNum = Random.Range(2, 4);
+        audioSource.clip = targetChar.charVO[randomNum];
+        audioSource.Play();
     }
 }
