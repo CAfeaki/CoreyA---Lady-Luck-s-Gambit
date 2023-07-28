@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 3588685}
   - component: {fileID: 3588684}
   - component: {fileID: 3588683}
+  - component: {fileID: 3588688}
   - component: {fileID: 3588686}
   - component: {fileID: 3588687}
   m_Layer: 5
@@ -297,6 +298,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3588688}
+        m_TargetAssemblyTypeName: SelectSFX, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -411,6 +424,27 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX: []
+--- !u!114 &3588688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3588681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: 9e85b01c1ddaab34d8a4023020191575, type: 3}
+  - {fileID: 8300000, guid: 730cb656c4c8ebb48abcd32350dd10d2, type: 3}
+  - {fileID: 8300000, guid: 34df7182867e57649ba0b93d4758914d, type: 3}
+  - {fileID: 8300000, guid: 1ef15e36f59d38e41b4e6ce9a1c9f3f8, type: 3}
+  - {fileID: 8300000, guid: 735e708e506a8f546862054084963fb1, type: 3}
+  - {fileID: 8300000, guid: af34e007c82fc1344813ec56c88dd4ca, type: 3}
 --- !u!1 &8590840
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +918,7 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX: []
 --- !u!114 &132009617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,6 +1254,7 @@ GameObject:
   - component: {fileID: 325460981}
   - component: {fileID: 325460980}
   - component: {fileID: 325460979}
+  - component: {fileID: 325460982}
   - component: {fileID: 325460978}
   m_Layer: 5
   m_Name: card2
@@ -1366,6 +1402,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325460976}
   m_CullTransparentMesh: 1
+--- !u!114 &325460982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325460976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: e09428b27d95dbd46b53ecb8a2c4e761, type: 3}
+  - {fileID: 8300000, guid: dfc7105179800d845911ccf9dd125108, type: 3}
 --- !u!1 &345447928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2205,6 +2257,9 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX:
+  - {fileID: 8300000, guid: e09428b27d95dbd46b53ecb8a2c4e761, type: 3}
+  - {fileID: 8300000, guid: dfc7105179800d845911ccf9dd125108, type: 3}
 --- !u!114 &533266723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2331,6 +2386,7 @@ GameObject:
   - component: {fileID: 549580878}
   - component: {fileID: 549580877}
   - component: {fileID: 549580876}
+  - component: {fileID: 549580879}
   - component: {fileID: 549580875}
   m_Layer: 5
   m_Name: card1
@@ -2478,6 +2534,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549580873}
   m_CullTransparentMesh: 1
+--- !u!114 &549580879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549580873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: e09428b27d95dbd46b53ecb8a2c4e761, type: 3}
+  - {fileID: 8300000, guid: dfc7105179800d845911ccf9dd125108, type: 3}
 --- !u!1 &563509203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,6 +2562,7 @@ GameObject:
   - component: {fileID: 563509207}
   - component: {fileID: 563509206}
   - component: {fileID: 563509205}
+  - component: {fileID: 563509210}
   - component: {fileID: 563509208}
   - component: {fileID: 563509209}
   m_Layer: 5
@@ -2572,6 +2645,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 563509210}
+        m_TargetAssemblyTypeName: SelectSFX, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2686,6 +2771,27 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX: []
+--- !u!114 &563509210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563509203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: 9e85b01c1ddaab34d8a4023020191575, type: 3}
+  - {fileID: 8300000, guid: 730cb656c4c8ebb48abcd32350dd10d2, type: 3}
+  - {fileID: 8300000, guid: 34df7182867e57649ba0b93d4758914d, type: 3}
+  - {fileID: 8300000, guid: 1ef15e36f59d38e41b4e6ce9a1c9f3f8, type: 3}
+  - {fileID: 8300000, guid: 735e708e506a8f546862054084963fb1, type: 3}
+  - {fileID: 8300000, guid: af34e007c82fc1344813ec56c88dd4ca, type: 3}
 --- !u!1 &570760230
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,6 +3293,7 @@ GameObject:
   - component: {fileID: 680562128}
   - component: {fileID: 680562127}
   - component: {fileID: 680562126}
+  - component: {fileID: 680562131}
   - component: {fileID: 680562129}
   - component: {fileID: 680562130}
   m_Layer: 5
@@ -3269,6 +3376,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 680562131}
+        m_TargetAssemblyTypeName: SelectSFX, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3383,6 +3502,27 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX: []
+--- !u!114 &680562131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680562124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: 9e85b01c1ddaab34d8a4023020191575, type: 3}
+  - {fileID: 8300000, guid: 730cb656c4c8ebb48abcd32350dd10d2, type: 3}
+  - {fileID: 8300000, guid: 34df7182867e57649ba0b93d4758914d, type: 3}
+  - {fileID: 8300000, guid: 1ef15e36f59d38e41b4e6ce9a1c9f3f8, type: 3}
+  - {fileID: 8300000, guid: 735e708e506a8f546862054084963fb1, type: 3}
+  - {fileID: 8300000, guid: af34e007c82fc1344813ec56c88dd4ca, type: 3}
 --- !u!1 &708002360
 GameObject:
   m_ObjectHideFlags: 0
@@ -3563,6 +3703,7 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX: []
 --- !u!114 &708002365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3861,6 +4002,7 @@ GameObject:
   - component: {fileID: 797842530}
   - component: {fileID: 797842529}
   - component: {fileID: 797842528}
+  - component: {fileID: 797842531}
   m_Layer: 5
   m_Name: pullButton
   m_TagString: ActionButton
@@ -3945,6 +4087,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 797842531}
+        m_TargetAssemblyTypeName: SelectSFX, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &797842529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3983,6 +4137,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797842526}
   m_CullTransparentMesh: 1
+--- !u!114 &797842531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797842526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: 9e85b01c1ddaab34d8a4023020191575, type: 3}
+  - {fileID: 8300000, guid: 730cb656c4c8ebb48abcd32350dd10d2, type: 3}
+  - {fileID: 8300000, guid: 34df7182867e57649ba0b93d4758914d, type: 3}
+  - {fileID: 8300000, guid: 1ef15e36f59d38e41b4e6ce9a1c9f3f8, type: 3}
+  - {fileID: 8300000, guid: 735e708e506a8f546862054084963fb1, type: 3}
+  - {fileID: 8300000, guid: af34e007c82fc1344813ec56c88dd4ca, type: 3}
 --- !u!1 &797853876
 GameObject:
   m_ObjectHideFlags: 0
@@ -4853,6 +5027,7 @@ GameObject:
   - component: {fileID: 1003635477}
   - component: {fileID: 1003635476}
   - component: {fileID: 1003635475}
+  - component: {fileID: 1003635478}
   m_Layer: 5
   m_Name: healButton
   m_TagString: ActionButton
@@ -4937,6 +5112,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 797842531}
+        m_TargetAssemblyTypeName: SelectSFX, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1003635476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4975,6 +5162,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003635473}
   m_CullTransparentMesh: 1
+--- !u!114 &1003635478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003635473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: 9e85b01c1ddaab34d8a4023020191575, type: 3}
+  - {fileID: 8300000, guid: 730cb656c4c8ebb48abcd32350dd10d2, type: 3}
+  - {fileID: 8300000, guid: 34df7182867e57649ba0b93d4758914d, type: 3}
+  - {fileID: 8300000, guid: 1ef15e36f59d38e41b4e6ce9a1c9f3f8, type: 3}
+  - {fileID: 8300000, guid: 735e708e506a8f546862054084963fb1, type: 3}
+  - {fileID: 8300000, guid: af34e007c82fc1344813ec56c88dd4ca, type: 3}
 --- !u!1 &1004928503
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,6 +5590,7 @@ GameObject:
   - component: {fileID: 1074261276}
   - component: {fileID: 1074261275}
   - component: {fileID: 1074261274}
+  - component: {fileID: 1074261277}
   - component: {fileID: 1074261273}
   m_Layer: 5
   m_Name: card3
@@ -5530,6 +5738,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1074261271}
   m_CullTransparentMesh: 1
+--- !u!114 &1074261277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074261271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: e09428b27d95dbd46b53ecb8a2c4e761, type: 3}
+  - {fileID: 8300000, guid: dfc7105179800d845911ccf9dd125108, type: 3}
 --- !u!1 &1080639870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5783,6 +6007,9 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX:
+  - {fileID: 8300000, guid: e09428b27d95dbd46b53ecb8a2c4e761, type: 3}
+  - {fileID: 8300000, guid: dfc7105179800d845911ccf9dd125108, type: 3}
 --- !u!114 &1142433687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6109,6 +6336,9 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX:
+  - {fileID: 8300000, guid: e09428b27d95dbd46b53ecb8a2c4e761, type: 3}
+  - {fileID: 8300000, guid: dfc7105179800d845911ccf9dd125108, type: 3}
 --- !u!114 &1198946838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7303,6 +7533,7 @@ GameObject:
   - component: {fileID: 1581386269}
   - component: {fileID: 1581386268}
   - component: {fileID: 1581386267}
+  - component: {fileID: 1581386270}
   m_Layer: 5
   m_Name: fightButton
   m_TagString: ActionButton
@@ -7387,6 +7618,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 797842531}
+        m_TargetAssemblyTypeName: SelectSFX, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 731975324}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: DisplayMoves
@@ -7437,6 +7680,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581386265}
   m_CullTransparentMesh: 1
+--- !u!114 &1581386270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581386265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a89eea366cccf43be39544db2dcbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 731975326}
+  sfxList:
+  - {fileID: 8300000, guid: 9e85b01c1ddaab34d8a4023020191575, type: 3}
+  - {fileID: 8300000, guid: 730cb656c4c8ebb48abcd32350dd10d2, type: 3}
+  - {fileID: 8300000, guid: 34df7182867e57649ba0b93d4758914d, type: 3}
+  - {fileID: 8300000, guid: 1ef15e36f59d38e41b4e6ce9a1c9f3f8, type: 3}
+  - {fileID: 8300000, guid: 735e708e506a8f546862054084963fb1, type: 3}
+  - {fileID: 8300000, guid: af34e007c82fc1344813ec56c88dd4ca, type: 3}
 --- !u!1 &1631206386
 GameObject:
   m_ObjectHideFlags: 0
@@ -8209,7 +8472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1779053872
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8231,8 +8494,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -6.4744873}
-  m_SizeDelta: {x: -0, y: 12.949}
+  m_AnchoredPosition: {x: 7.999695, y: -0.000061035156}
+  m_SizeDelta: {x: 16, y: 12.949}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779053873
 MonoBehaviour:
@@ -8587,6 +8850,7 @@ MonoBehaviour:
   char1Dead: 0
   char2Dead: 0
   restartButton: {fileID: 1326856693}
+  victoryJingle: {fileID: 8300000, guid: 6453a236eea8aac4e8457186afe6c1b1, type: 3}
 --- !u!1 &1954755971
 GameObject:
   m_ObjectHideFlags: 0
@@ -9103,6 +9367,7 @@ MonoBehaviour:
   - +10 to all stats for 1 round.
   - +10 to all stats for 1 round.
   - No play ability.
+  cardHoverSFX: []
 --- !u!114 &2041123200
 MonoBehaviour:
   m_ObjectHideFlags: 0
