@@ -28,6 +28,8 @@ public class TurnManager : MonoBehaviour
     public GameObject restartButton;
 
     private CardBuffs cardBuffs;
+    public AudioClip victoryJingle;
+    private bool victoryPlayed = false;
 
 
     void Start()
@@ -72,6 +74,12 @@ public class TurnManager : MonoBehaviour
             announcementText.text = "You win!";
             announcementText.enabled = true;
             restartButton.SetActive(true);
+            //uiManager.audioSource.clip = victoryJingle;
+            if (!victoryPlayed)
+            {
+                uiManager.audioSource.PlayOneShot(victoryJingle);
+                victoryPlayed = true;
+            }
 
             foreach (Button actionButton in allActionButtons)
             {
@@ -231,11 +239,11 @@ public class TurnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             int randomNum = Random.Range(0, 2);
-            uiManager.audioSource.clip = enemyScripts[enemyNum].enemyVO[randomNum];
+            uiManager.audioSource.clip = enemyScripts[i].enemyVO[randomNum];
             uiManager.audioSource.Play();
             yield return new WaitForSeconds(0.5f);
             randomNum = Random.Range(2, 4);
-            uiManager.audioSource.clip = enemyScripts[enemyNum].enemyTarget.charVO[randomNum];
+            uiManager.audioSource.clip = enemyScripts[i].enemyTarget.charVO[randomNum];
             uiManager.audioSource.Play();
         }
     }

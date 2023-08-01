@@ -13,6 +13,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public int moveIndex;
     public Character activeCharacter;
     public DealerSystem dealerSystem;
+    private UIManager uiManager;
     public Button cardButton;
     public SelectedInfo cardScript;
     public GameObject cardDesc;
@@ -52,6 +53,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     };
     private string cardName;
     private int charNum;
+    public List<AudioClip> cardHoverSFX;
 
     void Start()
     {
@@ -61,6 +63,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         moveIndex = this.GetComponent<SelectedInfo>().moveType;
         charNum = this.GetComponent<SelectedInfo>().characterNum;
         dealerSystem = GameObject.Find("DealerSystem").GetComponent<DealerSystem>();
+        uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     void Update()
@@ -72,6 +75,9 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (cardType != 0)
         {
+            int randomNum = Random.Range(0, 2);
+            uiManager.audioSource.clip = cardHoverSFX[randomNum];
+            uiManager.audioSource.Play();
             cardDesc.SetActive(true);
             if (cardScript.cardNum > 10)
             {
